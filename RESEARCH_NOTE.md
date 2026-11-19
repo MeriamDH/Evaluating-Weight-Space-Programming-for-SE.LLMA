@@ -74,17 +74,24 @@ I kept a strict split: 8 dev prompts were used only to find the "Swedish vs. Eng
 * Even when the model wrote in Swedish without looping, the 0.5B model made clear factual and grammar errors such as drifting into Norwegian on "sustainable development", miscalculating 25% of 240 kr as 6 kr, and listing Malmö and Gothenburg as Nordic capitals. A single weight patch cannot fix missing knowledge.
 * All 5 setups scored 100% on the 5 English and math check questions.
 
+* A sparse weight edit on Qwen/Qwen2.5-0.5B-Instruct (0.0499% of parameters) did not reduce loops below baseline (0.40) or boost Swedish probability (0.900), only slightly cutting code-switching (0.20 to 0.10) while preserving 4-gram diversity better than random noise (0.759 vs. 0.712) and keeping regression keyword accuracy at 1.00—meaning a simple Swedish system prompt remains far more effective with zero weight changes.
 
-This study tested a small dataset (10 Swedish + 5 regression prompts), one small model (0.5B), and a single edit layer (layer 14).
+** Limitation:** This study tested a small dataset (10 Swedish + 5 regression prompts), one small model (0.5B), and a single edit layer (layer 14).
 
 
-### Limitations of Conclusions
+ of Conclusions
 * Sample sizes (`n=10` Swedish eval, `n=5` regression) are scoped for a 4-hour CPU/single-GPU budget and detect large effect sizes rather than subtle stylistic shifts.
 * Single-layer rank-1 weight edits test localized linear separability; multi-layer iterative edits might behave differently at larger parameter budgets.
 
 ---
 
-## 5. Recommendation for SE.LLMA
+## 4. Recommendation 
+On a small open model, editing weights directly did not fix repetition loops and performed worse than simply adding a Swedish system prompt. SE.LLMA should focus on high-quality Swedish training data, LoRA/full fine-tuning, and solid Swedish benchmarks, using weight inspection only as a quick debugging tool.
+**Next Experiment:** Compare a targeted weight edit against a small LoRA fine-tune on the exact same Swedish dataset across two model sizes (0.5B and 1.5B or 3B), grading outputs for both grammar and factual accuracy.
 
-* **Should SE.LLMA pursue Weight-Space Programming right now?** **No as a primary training/adaptation method; Yes selectively as a lightweight diagnostic and post-hoc patching probe.** While sparse weight edits are intriguing for curing degenerate token-runaway loops in small checkpoints, Swedish idiomatic fluency, cultural grounding, and terminology require distributed representations that cannot be reliably authored via narrow weight surgery. SE.LLMA should prioritize high-quality Swedish data curation, LoRA/full fine-tuning, and standardized Swedish evaluation harnesses.
-* **Most Informative Next Experiment:** Run a **scaling & compute-matched comparison** across `0.5B`, `1.5B`, and `7B` open checkpoints comparing (a) sparse weight-space edits, (b) inference-time activation steering, and (c) rank-1 LoRA trained on the exact same `dev` set, measuring whether localized weight edits degrade sharply as features become more distributed in larger models.
+---
+
+## 5.	References
+1.	Takehi, R., et al. (2026). Sparks of Weight-Space Programming. https://rikiyat.github.io/blog/weight-space-programming
+2.	Qwen model card, https://huggingface.co/Qwen/Qwen2.5-0.5B-Instruct
+
