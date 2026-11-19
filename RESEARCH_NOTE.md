@@ -52,9 +52,7 @@ In a compact multilingual/open-weight LLM, a targeted weight edit can reduce uni
 * **Model Tested:** Qwen/Qwen2.5-0.5B-Instruct (float32, Seed: 42)
 * **Evaluation Sets:** 10 held-out Swedish prompts (swedish_eval.jsonl), 5 held-out English/math checks (regression_eval.jsonl)
 I kept a strict split: 8 dev prompts were used only to find the "Swedish vs. English" direction inside layer 14, and 15 separate eval prompts were used only for final testing.
-I compared 5 setups on the exact same model (494M total parameters):
-
-* **Controls:**
+* I compared 5 setups on the exact same model (494M total parameters):
   1. `baseline`: Unchanged model with no system prompt.
   2. `prompt_control`: Unchanged model told in Swedish: "Always answer in correct, idiomatic Swedish."
   3. `activation_steering`: Nudging layer 14 activations toward Swedish while generating text (no saved weight changes).
