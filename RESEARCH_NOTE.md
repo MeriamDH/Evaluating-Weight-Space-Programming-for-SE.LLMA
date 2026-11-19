@@ -1,6 +1,6 @@
 # Research Note: Evaluating Weight-Space Programming for SE.LLMA
 
-**Author:** [Your Name]  
+**Author:** [Meriam Dhouibi]  
 **Date:** November 2026  
 **Target Model:** `Qwen/Qwen2.5-0.5B-Instruct` (Seed: `42`)
 
