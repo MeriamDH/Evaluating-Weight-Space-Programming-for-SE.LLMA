@@ -35,17 +35,15 @@
   -	The auditing, backdoor-detection, and unlearning applications. Experiment 7 is the closest test, and it failed from weights alone.
   -	“Beyond what we’d expect from humans.” The authors concede they ran no human or interpretability-researcher comparison.
 
-
-
 ---
 
 ## 2. Hypothesis
 
-* **Narrow Question:** Can a sparse (`<= 0.05%` parameters), targeted weight-space edit to an MLP down-projection layer reduce English code-switching and degenerate repetition loops on Swedish prompts in a compact open-weight LLM without degrading English/math regression performance?
-* **Why It Matters for SE.LLMA:** SE.LLMA develops Swedish language infrastructure iteratively starting from smaller open-weight models before scaling. Small multilingual checkpoints frequently suffer from English drift on technical Swedish queries; knowing whether direct weight patching offers a reliable shortcut—or if prompting/steering/fine-tuning remains superior—directly informs engineering priorities.
-* **Falsification Criteria:**
-  * *Supported if:* `targeted_weight_edit` increases Swedish language adherence and lowers code-switching/loop rates on `swedish_eval.jsonl` relative to both `baseline` and norm-matched `random_weight_edit`, while preserving `regression_eval.jsonl` accuracy within `5%` of baseline.
-  * *Challenged if:* Gains vanish on held-out prompts, match random noise, cause collateral fluency/regression damage, or lag significantly behind a simple Swedish system prompt (`prompt_control`).
+In a compact multilingual/open-weight LLM, a targeted weight edit can reduce unintended English code-switching or repetitive generation loops on Swedish prompts without causing severe degradation on basic Swedish comprehension/generation or English/math sanity checks.
+* **Question:** Can editing a tiny fraction (~0.05%) of weights in one middle layer reduce English switching and repetitive text loops on Swedish prompts without hurting English or math accuracy?
+* **Why it matters for SE.LLMA:** Small open models used as stepping stones in SE.LLMA often suffer from language drift (answering Swedish prompts in English), awkward/non-idiomatic phrasing, or generation loops. Knowing whether lightweight weight-space edits can patch these behaviors or whether standard fine-tuning/prompting/activation steering is far more reliable directly informs engineering effort.
+* **Result that would support the hypothesis:** Targeted edits measurably lower Swedish code-switching / loop rates on a held-out Swedish evaluation set while keeping Swedish quality and baseline capabilities intact, outperforming a random/untargeted edit of the same magnitude.
+* **Evidence that would challenge it:** Edits fail to reduce Swedish code-switching/loops, only work when paired with heavy trial-and-error, or degrade Swedish fluency/coherence more than simple prompting or lightweight fine-tuning/steering.
 
 ---
 
