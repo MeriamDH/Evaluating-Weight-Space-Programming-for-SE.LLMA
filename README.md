@@ -38,11 +38,11 @@ sellma-weight-space-eval/
 
 2. **Run the full evaluation suite (CPU or single GPU):**
    ```bash
-   python -m src.evaluate --config configs/experiment.yaml
+   python -m code.evaluate --config configs/experiment.yaml
    ```
    *(Optional quick smoke test with 2 examples per split:)*
    ```bash
-   python -m src.evaluate --config configs/experiment.yaml --max-examples 2
+   python -m code.evaluate --config configs/experiment.yaml --max-examples 2
    ```
 
 3. **Inspect outputs:**
