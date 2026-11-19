@@ -71,7 +71,7 @@ I kept a strict split: 8 dev prompts were used only to find the "Swedish vs. Eng
 
 * Both baseline and targeted_weight_edit got stuck in repetitive loops on 4 out of 10 Swedish prompts (40%), and their Swedish confidence stayed identical (0.90).
 * Compared to random_weight_edit, the targeted edit preserved better word variety (0.76 vs. 0.71) and stopped slightly earlier on 1 prompt (90% vs. 100% hitting max length). However, a simple Swedish system prompt (prompt_control) beat everything: 0% language drift, half as many loops (20%), and cleaner stops (60%).
-* Even when the model wrote in Swedish without looping, the 0.5B model made clear factual and grammar errors—such as drifting into Norwegian on "sustainable development", miscalculating 25% of 240 kr as 6 kr, and listing Malmö and Gothenburg as Nordic capitals. A single weight patch cannot fix missing knowledge.
+* Even when the model wrote in Swedish without looping, the 0.5B model made clear factual and grammar errors such as drifting into Norwegian on "sustainable development", miscalculating 25% of 240 kr as 6 kr, and listing Malmö and Gothenburg as Nordic capitals. A single weight patch cannot fix missing knowledge.
 * All 5 setups scored 100% on the 5 English and math check questions.
 
 
