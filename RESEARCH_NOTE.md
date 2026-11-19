@@ -75,20 +75,16 @@ I compared 5 setups on the exact same model (494M total parameters):
 * Even when the model wrote in Swedish without looping, the 0.5B model made clear factual and grammar errors such as drifting into Norwegian on "sustainable development", miscalculating 25% of 240 kr as 6 kr, and listing Malmö and Gothenburg as Nordic capitals. A single weight patch cannot fix missing knowledge.
 * All 5 setups scored 100% on the 5 English and math check questions.
 
-* A sparse weight edit on Qwen/Qwen2.5-0.5B-Instruct (0.0499% of parameters) did not reduce loops below baseline (0.40) or boost Swedish probability (0.900), only slightly cutting code-switching (0.20 to 0.10) while preserving 4-gram diversity better than random noise (0.759 vs. 0.712) and keeping regression keyword accuracy at 1.00—meaning a simple Swedish system prompt remains far more effective with zero weight changes.
+A sparse weight edit on Qwen/Qwen2.5-0.5B-Instruct (0.0499% of parameters) did not reduce loops below baseline (0.40) or boost Swedish probability (0.900), only slightly cutting code-switching (0.20 to 0.10) while preserving 4-gram diversity better than random noise (0.759 vs. 0.712) and keeping regression keyword accuracy at 1.00—meaning a simple Swedish system prompt remains far more effective with zero weight changes.
 
-* **Limitation:** This study tested a small dataset (10 Swedish + 5 regression prompts), one small model (0.5B), and a single edit layer (layer 14).
-
-
- of Conclusions
-* Sample sizes (`n=10` Swedish eval, `n=5` regression) are scoped for a 4-hour CPU/single-GPU budget and detect large effect sizes rather than subtle stylistic shifts.
-* Single-layer rank-1 weight edits test localized linear separability; multi-layer iterative edits might behave differently at larger parameter budgets.
+**Limitation:** This study tested a small dataset (10 Swedish + 5 regression prompts), one small model (0.5B), and a single edit layer (layer 14).
 
 ---
 
 ## 4. Recommendation 
 On a small open model, editing weights directly did not fix repetition loops and performed worse than simply adding a Swedish system prompt. SE.LLMA should focus on high-quality Swedish training data, LoRA/full fine-tuning, and solid Swedish benchmarks, using weight inspection only as a quick debugging tool.
-* **Next Experiment:** Compare a targeted weight edit against a small LoRA fine-tune on the exact same Swedish dataset across two model sizes (0.5B and 1.5B or 3B), grading outputs for both grammar and factual accuracy.
+
+**Next Experiment:** Compare a targeted weight edit against a small LoRA fine-tune on the exact same Swedish dataset across two model sizes (0.5B and 1.5B or 3B), grading outputs for both grammar and factual accuracy.
 
 ---
 
