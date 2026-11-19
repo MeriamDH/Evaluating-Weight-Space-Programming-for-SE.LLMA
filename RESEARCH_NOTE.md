@@ -76,7 +76,7 @@ I kept a strict split: 8 dev prompts were used only to find the "Swedish vs. Eng
 
 * A sparse weight edit on Qwen/Qwen2.5-0.5B-Instruct (0.0499% of parameters) did not reduce loops below baseline (0.40) or boost Swedish probability (0.900), only slightly cutting code-switching (0.20 to 0.10) while preserving 4-gram diversity better than random noise (0.759 vs. 0.712) and keeping regression keyword accuracy at 1.00—meaning a simple Swedish system prompt remains far more effective with zero weight changes.
 
-** Limitation:** This study tested a small dataset (10 Swedish + 5 regression prompts), one small model (0.5B), and a single edit layer (layer 14).
+* **Limitation:** This study tested a small dataset (10 Swedish + 5 regression prompts), one small model (0.5B), and a single edit layer (layer 14).
 
 
  of Conclusions
@@ -87,7 +87,7 @@ I kept a strict split: 8 dev prompts were used only to find the "Swedish vs. Eng
 
 ## 4. Recommendation 
 On a small open model, editing weights directly did not fix repetition loops and performed worse than simply adding a Swedish system prompt. SE.LLMA should focus on high-quality Swedish training data, LoRA/full fine-tuning, and solid Swedish benchmarks, using weight inspection only as a quick debugging tool.
-**Next Experiment:** Compare a targeted weight edit against a small LoRA fine-tune on the exact same Swedish dataset across two model sizes (0.5B and 1.5B or 3B), grading outputs for both grammar and factual accuracy.
+* **Next Experiment:** Compare a targeted weight edit against a small LoRA fine-tune on the exact same Swedish dataset across two model sizes (0.5B and 1.5B or 3B), grading outputs for both grammar and factual accuracy.
 
 ---
 
