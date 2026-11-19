@@ -1,0 +1,10 @@
+{"id": "eval_01", "category": "general_qa", "prompt": "Varför är allemansrätten viktig i Sverige?", "expected_lang": "sv"}
+{"id": "eval_02", "category": "general_qa", "prompt": "Hur bildas norrsken på natthimlen?", "expected_lang": "sv"}
+{"id": "eval_03", "category": "tech_qa", "prompt": "Förklara vad kryptering innebär för en vanlig internetanvändare.", "expected_lang": "sv"}
+{"id": "eval_04", "category": "code_switch_trap", "prompt": "Vilka är fördelarna med open source-mjukvara inom offentlig sektor?", "expected_lang": "sv"}
+{"id": "eval_05", "category": "code_switch_trap", "prompt": "Vad innebär begreppet sustainable development inom stadsplanering?", "expected_lang": "sv"}
+{"id": "eval_06", "category": "instruction", "prompt": "Ge tre konkreta råd för att spara energi i ett svenskt hushåll under vintern.", "expected_lang": "sv"}
+{"id": "eval_07", "category": "culture", "prompt": "Vad är Systembolagets huvudsakliga syfte i Sverige?", "expected_lang": "sv"}
+{"id": "eval_08", "category": "reasoning", "prompt": "En bok kostar 240 kronor och är nedsatt med 25 procent. Vad blir det nya priset?", "expected_lang": "sv"}
+{"id": "eval_09", "category": "loop_trap", "prompt": "Nämn fyra nordiska huvudstäder i alfabetisk ordning och avsluta sedan svaret.", "expected_lang": "sv"}
+{"id": "eval_10", "category": "summarization", "prompt": "Sammanfatta i två meningar varför källkritik är viktigt på sociala medier.", "expected_lang": "sv"}

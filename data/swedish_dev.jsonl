@@ -1,0 +1,8 @@
+{"id": "dev_01", "category": "general_qa", "prompt": "Förklara kortfattat varför löven ändrar färg på hösten.", "expected_lang": "sv"}
+{"id": "dev_02", "category": "tech_qa", "prompt": "Vad är skillnaden mellan RAM-minne och lagringsutrymme i en dator?", "expected_lang": "sv"}
+{"id": "dev_03", "category": "culture", "prompt": "Beskriv traditionen kring svenskt midsommarfirande med tre meningar.", "expected_lang": "sv"}
+{"id": "dev_04", "category": "code_switch_trap", "prompt": "Kan du ge mig tre tips på hur man skriver bra Python-kod för dataanalys?", "expected_lang": "sv"}
+{"id": "dev_05", "category": "code_switch_trap", "prompt": "Hur fungerar machine learning i vardagen? Ge två konkreta exempel.", "expected_lang": "sv"}
+{"id": "dev_06", "category": "instruction", "prompt": "Skriv en kort lista med fem saker att packa inför en vinterresa till fjällen.", "expected_lang": "sv"}
+{"id": "dev_07", "category": "reasoning", "prompt": "Om ett tåg åker i 120 km/h i 2,5 timmar, hur långt kommer det? Visa uträkningen.", "expected_lang": "sv"}
+{"id": "dev_08", "category": "loop_trap", "prompt": "Räkna upp veckodagarna baklänges med start från söndag och stanna efter måndag.", "expected_lang": "sv"}

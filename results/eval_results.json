@@ -1,0 +1,1968 @@
+{
+  "timestamp_utc": "2026-11-19T11:31:27.557045+00:00",
+  "config": {
+    "experiment": {
+      "name": "swedish_language_adherence_weight_edit",
+      "seed": 42,
+      "device": "auto"
+    },
+    "model": {
+      "name": "Qwen/Qwen2.5-0.5B-Instruct",
+      "revision": "main",
+      "torch_dtype": "float32"
+    },
+    "generation": {
+      "max_new_tokens": 160,
+      "do_sample": false,
+      "temperature": 0.0,
+      "repetition_penalty": 1.0
+    },
+    "datasets": {
+      "dev_path": "data/swedish_dev.jsonl",
+      "eval_swedish_path": "data/swedish_eval.jsonl",
+      "eval_regression_path": "data/regression_eval.jsonl"
+    },
+    "conditions": [
+      {
+        "name": "baseline",
+        "description": "Unchanged base model with neutral prompt"
+      },
+      {
+        "name": "prompt_control",
+        "description": "Unchanged base model with explicit Swedish-only system instruction",
+        "system_prompt": "Du är en hjälpsam svensk assistent. Svara alltid på korrekt, idiomatisk svenska."
+      },
+      {
+        "name": "activation_steering",
+        "description": "Inference-time residual stream steering vector computed from dev contrastive pairs",
+        "layer_idx": 14,
+        "alpha": 1.5
+      },
+      {
+        "name": "random_weight_edit",
+        "description": "Untargeted control: Gaussian noise matched in L2 norm and parameter count to targeted edit",
+        "target_param_fraction": 0.0005
+      },
+      {
+        "name": "targeted_weight_edit",
+        "description": "Weight-space edit patching top language-drift / loop-inducing MLP/attention directions identified on dev",
+        "target_param_fraction": 0.0005,
+        "edit_scale": -0.15
+      }
+    ],
+    "output": {
+      "results_dir": "results"
+    }
+  },
+  "provenance": {
+    "model_name": "Qwen/Qwen2.5-0.5B-Instruct",
+    "revision": "main",
+    "seed": 42,
+    "base_model_sha256": "649fbe1e54e0d368b2bd3a3a42315709e282e01e774e3263055a637a72121b3a",
+    "targeted_model_sha256": "5c749794f5db9e1c393856ad6ea6d06de64c1c4ec5973349852c58bcd37e5a8a",
+    "random_model_sha256": "7a33af7d61eebaf90fc08345871133dc4c6244e91ff0e2ba349f5612fde7e217"
+  },
+  "static_weight_inspection_top10": [
+    {
+      "parameter": "model.layers.21.mlp.up_proj.weight",
+      "shape": [
+        4864,
+        896
+      ],
+      "mean_row_l2": 0.6140351295471191,
+      "max_row_l2": 6.614602565765381,
+      "max_row_idx": 567,
+      "max_to_mean_ratio": 10.772352016152517
+    },
+    {
+      "parameter": "model.layers.2.mlp.up_proj.weight",
+      "shape": [
+        4864,
+        896
+      ],
+      "mean_row_l2": 0.5122352838516235,
+      "max_row_l2": 5.421907424926758,
+      "max_row_idx": 813,
+      "max_to_mean_ratio": 10.584798813853855
+    },
+    {
+      "parameter": "model.layers.0.self_attn.q_proj.weight",
+      "shape": [
+        896,
+        896
+      ],
+      "mean_row_l2": 1.6301368474960327,
+      "max_row_l2": 12.599079132080078,
+      "max_row_idx": 95,
+      "max_to_mean_ratio": 7.728847520643963
+    },
+    {
+      "parameter": "model.layers.21.mlp.gate_proj.weight",
+      "shape": [
+        4864,
+        896
+      ],
+      "mean_row_l2": 0.6085904240608215,
+      "max_row_l2": 4.3316216468811035,
+      "max_row_idx": 567,
+      "max_to_mean_ratio": 7.117465992938805
+    },
+    {
+      "parameter": "model.layers.23.self_attn.o_proj.weight",
+      "shape": [
+        896,
+        896
+      ],
+      "mean_row_l2": 0.5770115256309509,
+      "max_row_l2": 2.9741735458374023,
+      "max_row_idx": 490,
+      "max_to_mean_ratio": 5.154443912684762
+    },
+    {
+      "parameter": "model.layers.11.self_attn.o_proj.weight",
+      "shape": [
+        896,
+        896
+      ],
+      "mean_row_l2": 0.46299833059310913,
+      "max_row_l2": 2.367356061935425,
+      "max_row_idx": 669,
+      "max_to_mean_ratio": 5.11309848332023
+    },
+    {
+      "parameter": "model.layers.0.self_attn.o_proj.weight",
+      "shape": [
+        896,
+        896
+      ],
+      "mean_row_l2": 0.3783186376094818,
+      "max_row_l2": 1.8680198192596436,
+      "max_row_idx": 842,
+      "max_to_mean_ratio": 4.937689115881996
+    },
+    {
+      "parameter": "model.layers.2.self_attn.o_proj.weight",
+      "shape": [
+        896,
+        896
+      ],
+      "mean_row_l2": 0.43952327966690063,
+      "max_row_l2": 2.127875328063965,
+      "max_row_idx": 490,
+      "max_to_mean_ratio": 4.841325651002166
+    },
+    {
+      "parameter": "model.layers.0.self_attn.k_proj.weight",
+      "shape": [
+        128,
+        896
+      ],
+      "mean_row_l2": 1.8860948085784912,
+      "max_row_l2": 8.379485130310059,
+      "max_row_idx": 124,
+      "max_to_mean_ratio": 4.442769839669669
+    },
+    {
+      "parameter": "model.layers.8.self_attn.q_proj.weight",
+      "shape": [
+        896,
+        896
+      ],
+      "mean_row_l2": 0.7199381589889526,
+      "max_row_l2": 3.012756824493408,
+      "max_row_idx": 223,
+      "max_to_mean_ratio": 4.184743907343907
+    }
+  ],
+  "weight_edits": {
+    "targeted": {
+      "metadata": {
+        "target_tensor": "model.layers.14.mlp.down_proj.weight",
+        "layer_idx": 14,
+        "budget_elements": 247016,
+        "actual_modified_elements": 246400,
+        "edit_l2_norm": 1.8144588470458984
+      },
+      "diff": {
+        "total_parameters": 494032768,
+        "changed_parameters": 246400,
+        "changed_fraction": 0.0004987523418689507,
+        "global_l2_diff": 1.8144588470458984,
+        "modified_tensors": {
+          "model.layers.14.mlp.down_proj.weight": {
+            "changed_elements": 246400,
+            "total_elements": 4358144,
+            "fraction_changed": 0.05653782894736842,
+            "l2_norm": 1.8144588470458984
+          }
+        }
+      }
+    },
+    "random_control": {
+      "metadata": {
+        "target_tensor": "model.layers.14.mlp.down_proj.weight",
+        "layer_idx": 14,
+        "actual_modified_elements": 246400,
+        "edit_l2_norm": 1.8144587278366089
+      },
+      "diff": {
+        "total_parameters": 494032768,
+        "changed_parameters": 246400,
+        "changed_fraction": 0.0004987523418689507,
+        "global_l2_diff": 1.8144586086273193,
+        "modified_tensors": {
+          "model.layers.14.mlp.down_proj.weight": {
+            "changed_elements": 246400,
+            "total_elements": 4358144,
+            "fraction_changed": 0.05653782894736842,
+            "l2_norm": 1.8144586086273193
+          }
+        }
+      }
+    }
+  },
+  "summary_metrics": {
+    "baseline": {
+      "swedish_eval": {
+        "mean_sv_prob": 0.8999984157100134,
+        "mean_is_swedish": 1.0,
+        "mean_code_switched": 0.2,
+        "mean_sv_stopword_rate": 0.3614106099081721,
+        "mean_en_stopword_rate": 0.014000000000000002,
+        "mean_distinct_4gram": 0.7622247945267997,
+        "mean_loop_detected": 0.4,
+        "mean_hit_token_limit": 1.0,
+        "mean_char_length": 479.6,
+        "n_examples": 10
+      },
+      "regression_eval": {
+        "mean_sv_prob": 0.19999915285783584,
+        "mean_is_swedish": 0.2,
+        "mean_code_switched": 0.0,
+        "mean_sv_stopword_rate": 0.13333333333333333,
+        "mean_en_stopword_rate": 0.28975269148627675,
+        "mean_distinct_4gram": 0.9697683806558475,
+        "mean_loop_detected": 0.0,
+        "mean_hit_token_limit": 0.4,
+        "mean_char_length": 451.4,
+        "keyword_accuracy": 1.0,
+        "n_examples": 5
+      }
+    },
+    "prompt_control": {
+      "swedish_eval": {
+        "mean_sv_prob": 0.9999966650984783,
+        "mean_is_swedish": 1.0,
+        "mean_code_switched": 0.0,
+        "mean_sv_stopword_rate": 0.33777179569249716,
+        "mean_en_stopword_rate": 0.0,
+        "mean_distinct_4gram": 0.7820375319019726,
+        "mean_loop_detected": 0.2,
+        "mean_hit_token_limit": 0.6,
+        "mean_char_length": 390.9,
+        "n_examples": 10
+      },
+      "regression_eval": {
+        "mean_sv_prob": 0.0,
+        "mean_is_swedish": 0.2,
+        "mean_code_switched": 0.2,
+        "mean_sv_stopword_rate": 0.06666666666666667,
+        "mean_en_stopword_rate": 0.29135051219985497,
+        "mean_distinct_4gram": 0.9727469135802469,
+        "mean_loop_detected": 0.0,
+        "mean_hit_token_limit": 0.2,
+        "mean_char_length": 235.0,
+        "keyword_accuracy": 1.0,
+        "n_examples": 5
+      }
+    },
+    "activation_steering": {
+      "swedish_eval": {
+        "mean_sv_prob": 0.8714260120877103,
+        "mean_is_swedish": 1.0,
+        "mean_code_switched": 0.1,
+        "mean_sv_stopword_rate": 0.38523451058929636,
+        "mean_en_stopword_rate": 0.0,
+        "mean_distinct_4gram": 0.7537991147255853,
+        "mean_loop_detected": 0.3,
+        "mean_hit_token_limit": 0.8,
+        "mean_char_length": 460.2,
+        "n_examples": 10
+      },
+      "regression_eval": {
+        "mean_sv_prob": 0.0,
+        "mean_is_swedish": 0.2,
+        "mean_code_switched": 0.2,
+        "mean_sv_stopword_rate": 0.06666666666666667,
+        "mean_en_stopword_rate": 0.2573050410740246,
+        "mean_distinct_4gram": 0.9886196359421511,
+        "mean_loop_detected": 0.0,
+        "mean_hit_token_limit": 0.4,
+        "mean_char_length": 421.4,
+        "keyword_accuracy": 1.0,
+        "n_examples": 5
+      }
+    },
+    "random_weight_edit": {
+      "swedish_eval": {
+        "mean_sv_prob": 0.8999979780275934,
+        "mean_is_swedish": 1.0,
+        "mean_code_switched": 0.1,
+        "mean_sv_stopword_rate": 0.39592336100489717,
+        "mean_en_stopword_rate": 0.0,
+        "mean_distinct_4gram": 0.7118791660074092,
+        "mean_loop_detected": 0.4,
+        "mean_hit_token_limit": 1.0,
+        "mean_char_length": 487.8,
+        "n_examples": 10
+      },
+      "regression_eval": {
+        "mean_sv_prob": 0.19999915285783584,
+        "mean_is_swedish": 0.2,
+        "mean_code_switched": 0.0,
+        "mean_sv_stopword_rate": 0.13333333333333333,
+        "mean_en_stopword_rate": 0.2877444099127778,
+        "mean_distinct_4gram": 0.9680270871235092,
+        "mean_loop_detected": 0.0,
+        "mean_hit_token_limit": 0.4,
+        "mean_char_length": 448.6,
+        "keyword_accuracy": 1.0,
+        "n_examples": 5
+      }
+    },
+    "targeted_weight_edit": {
+      "swedish_eval": {
+        "mean_sv_prob": 0.8999975687727024,
+        "mean_is_swedish": 1.0,
+        "mean_code_switched": 0.1,
+        "mean_sv_stopword_rate": 0.3717526654126595,
+        "mean_en_stopword_rate": 0.0,
+        "mean_distinct_4gram": 0.7592730962847789,
+        "mean_loop_detected": 0.4,
+        "mean_hit_token_limit": 0.9,
+        "mean_char_length": 471.9,
+        "n_examples": 10
+      },
+      "regression_eval": {
+        "mean_sv_prob": 0.19999915285783584,
+        "mean_is_swedish": 0.2,
+        "mean_code_switched": 0.0,
+        "mean_sv_stopword_rate": 0.13333333333333333,
+        "mean_en_stopword_rate": 0.28975269148627675,
+        "mean_distinct_4gram": 0.9697683806558475,
+        "mean_loop_detected": 0.0,
+        "mean_hit_token_limit": 0.4,
+        "mean_char_length": 451.4,
+        "keyword_accuracy": 1.0,
+        "n_examples": 5
+      }
+    }
+  },
+  "detailed_predictions": {
+    "baseline": {
+      "swedish_eval": [
+        {
+          "id": "eval_01",
+          "category": "general_qa",
+          "prompt": "Varför är allemansrätten viktig i Sverige?",
+          "response": "Alemansrätten i Sverige är viktig för många sätt:\n\n1. Sverige är en del av Sverige, och det är en del av Sverige som är viktig för Sverige som en del av Sverige.\n\n2. Sverige är en del av Sverige, och det är en del av Sverige som är viktig för Sverige som en del av Sverige.\n\n3. Sverige är en del av Sverige, och det är en del av Sverige som är viktig för Sverige som en del av Sverige.\n\n4. Sverige är en del av Sverige, och det är en del av Sverige som är viktig för Sverige som en del av Sverige.\n\n5. Sverige är en del av Sverige",
+          "generated_tokens": 160,
+          "metrics": {
+            "sv_prob": 0.9999978048778192,
+            "is_swedish": 1.0,
+            "code_switched": 0.0,
+            "sv_stopword_rate": 0.5754716981132075,
+            "en_stopword_rate": 0.0,
+            "swedish_char_rate": 0.04150943396226415,
+            "distinct_4gram": 0.4074074074074074,
+            "max_4gram_repeat": 9,
+            "loop_detected": 1.0,
+            "hit_token_limit": 1.0,
+            "keyword_hit": null,
+            "char_length": 530
+          }
+        },
+        {
+          "id": "eval_02",
+          "category": "general_qa",
+          "prompt": "Hur bildas norrsken på natthimlen?",
+          "response": "Norrland är en del av Norge, och det är en del av Norge som är under nätet. Det är inte en del av Norge som är under nätet. Det är en del av Norge som är under nätet, men det är inte en del av Norge som är under nätet. Det är en del av Norge som är under nätet, men det är inte en del av Norge som är under nätet. Det är en del av Norge som är under nätet, men det är inte en del av Norge som är under nätet. Det är en del av Norge som är under nätet, men det är inte en del av Norge som är under nätet.",
+          "generated_tokens": 160,
+          "metrics": {
+            "sv_prob": 0.9999985624321029,
+            "is_swedish": 1.0,
+            "code_switched": 0.0,
+            "sv_stopword_rate": 0.6293103448275862,
+            "en_stopword_rate": 0.0,
+            "swedish_char_rate": 0.061630218687872766,
+            "distinct_4gram": 0.23893805309734514,
+            "max_4gram_repeat": 10,
+            "loop_detected": 1.0,
+            "hit_token_limit": 1.0,
+            "keyword_hit": null,
+            "char_length": 503
+          }
+        },
+        {
+          "id": "eval_03",
+          "category": "tech_qa",
+          "prompt": "Förklara vad kryptering innebär för en vanlig internetanvändare.",
+          "response": "Kryptering är en teknik som används för att säkerställa att data är inte innehållit av andra personer. Detta är en viktig del av säkerhetsläge och är en del av säkerhetssystemet. I det första fall, kryptering är en viktig del av säkerhetsläge och är en del av säkerhetssystemet. Detta är en viktig del av säkerhetsläge och är en del av säkerhetssystemet.\n\nKryptering är en teknik som används för att säkerställa att data är inte innehållit av andra personer. Detta är en viktig del av säkerhetslä",
+          "generated_tokens": 160,
+          "metrics": {
+            "sv_prob": 0.9999986883481508,
+            "is_swedish": 1.0,
+            "code_switched": 0.0,
+            "sv_stopword_rate": 0.5119047619047619,
+            "en_stopword_rate": 0.0,
+            "swedish_char_rate": 0.06653225806451613,
+            "distinct_4gram": 0.5185185185185185,
+            "max_4gram_repeat": 4,
+            "loop_detected": 1.0,
+            "hit_token_limit": 1.0,
+            "keyword_hit": null,
+            "char_length": 496
+          }
+        },
+        {
+          "id": "eval_04",
+          "category": "code_switch_trap",
+          "prompt": "Vilka är fördelarna med open source-mjukvara inom offentlig sektor?",
+          "response": "I en offentlig sektor, inklusive företag och organisationer, kan open source-mjukvara inom en kvalifiserad och effektiv system fördela fördelar som:\n\n1. Kvalitets- och effektivitet: Mjukvara kan förbättra kvaliteten och effektiviteten i processer och processen.\n\n2. Kompromissans: Mjukvara kan förbättra kompromissans och försöka upprätta en kvalificerad och effektiv system.\n\n3. Kvalitetskontroll: Mjukvara kan förbättra kontroll och kontroll och försöka upprätta",
+          "generated_tokens": 160,
+          "metrics": {
+            "sv_prob": 0.9999982344604789,
+            "is_swedish": 1.0,
+            "code_switched": 0.0,
+            "sv_stopword_rate": 0.2982456140350877,
+            "en_stopword_rate": 0.0,
+            "swedish_char_rate": 0.032327586206896554,
+            "distinct_4gram": 1.0,
+            "max_4gram_repeat": 1,
+            "loop_detected": 0.0,
+            "hit_token_limit": 1.0,
+            "keyword_hit": null,
+            "char_length": 464
+          }
+        },
+        {
+          "id": "eval_05",
+          "category": "code_switch_trap",
+          "prompt": "Vad innebär begreppet sustainable development inom stadsplanering?",
+          "response": "Sustainable development erar en termen som har styrka med mål på å utvikle og håndtere ekosystemet og å utvikle en livspennt og hårdt ekonomi. Dette er en omfattende mål som er omfattet av følgende merke:\n\n1. Utenverdi og utvikling: Såsom det er en mål på å utvikle en livspennt ekonomi, vil sustainable development omfattes også utvikling av teknologi, arbeidsforhold og styrke.\n\n2. Klima: Såsom det er en mål på å utvikle en livspennt ekonomi, vil sustainable development omf",
+          "generated_tokens": 160,
+          "metrics": {
+            "sv_prob": 0.0,
+            "is_swedish": 1.0,
+            "code_switched": 1.0,
+            "sv_stopword_rate": 0.23376623376623376,
+            "en_stopword_rate": 0.0,
+            "swedish_char_rate": 0.033542976939203356,
+            "distinct_4gram": 0.8266666666666667,
+            "max_4gram_repeat": 3,
+            "loop_detected": 0.0,
+            "hit_token_limit": 1.0,
+            "keyword_hit": null,
+            "char_length": 477
+          }
+        },
+        {
+          "id": "eval_06",
+          "category": "instruction",
+          "prompt": "Ge tre konkreta råd för att spara energi i ett svenskt hushåll under vintern.",
+          "response": "Det är en viktig och viktigt råd för att spara energi i ett svenskt hushåll. Detta är en viktig del av den viktigaste strategier för att spara energi och att utveckla en viktigare kultur för att hålla en viktigare kultur. Detta kan inkludera följande:\n\n1. Upphållning av elektrik: Upphållning av elektrik kan vara en viktig del av rådet. Detta kan inkludera att använda elektriska energier för att spara energi, eller att använda elektriska energier för att utveckla en viktigare kultur.\n\n2. U",
+          "generated_tokens": 160,
+          "metrics": {
+            "sv_prob": 0.9999963349168545,
+            "is_swedish": 1.0,
+            "code_switched": 0.0,
+            "sv_stopword_rate": 0.425,
+            "en_stopword_rate": 0.0,
+            "swedish_char_rate": 0.032454361054766734,
+            "distinct_4gram": 0.9240506329113924,
+            "max_4gram_repeat": 2,
+            "loop_detected": 0.0,
+            "hit_token_limit": 1.0,
+            "keyword_hit": null,
+            "char_length": 493
+          }
+        },
+        {
+          "id": "eval_07",
+          "category": "culture",
+          "prompt": "Vad är Systembolagets huvudsakliga syfte i Sverige?",
+          "response": "Systembolagets huvudsakliga syfte i Sverige är att försöka upprätthålla en bättre utvecklingsprocess för att följa utvecklingssteg och att försöka utveckla sig som en viktig del av den svenska utvecklingsprocess. I Sverige är det en viktig del av utvecklingssteg att upprätthålla en bättre utvecklingsprocess och att försöka utveckla sig som en viktig del av den svenska utvecklingsprocess. Systembolaget är en del av den svenska utvecklingsprocess och är en viktig del av det svenska utvecklingssteg.",
+          "generated_tokens": 160,
+          "metrics": {
+            "sv_prob": 0.9999976406786777,
+            "is_swedish": 1.0,
+            "code_switched": 0.0,
+            "sv_stopword_rate": 0.4383561643835616,
+            "en_stopword_rate": 0.0,
+            "swedish_char_rate": 0.03592814371257485,
+            "distinct_4gram": 0.8,
+            "max_4gram_repeat": 4,
+            "loop_detected": 1.0,
+            "hit_token_limit": 1.0,
+            "keyword_hit": null,
+            "char_length": 501
+          }
+        },
+        {
+          "id": "eval_08",
+          "category": "reasoning",
+          "prompt": "En bok kostar 240 kronor och är nedsatt med 25 procent. Vad blir det nya priset?",
+          "response": "Detta är en typisk kalkyl och kalkylbok. I en kalkylbok, som är en typisk kalkyl, kan du ta in 240 kronor och sedan kalkulera med 25 procent.\n\n1. First, calculate 25 procent av 240 kronor:\n   25 procent = 25 / 100 = 0,25\n   240 kronor * 0,25 = 6 kronor\n\n2. Next, subtract this amount from the original 240 kronor:\n   240 kronor - 6 kronor = 234 kronor\n\n3. The new price of the k",
+          "generated_tokens": 160,
+          "metrics": {
+            "sv_prob": 0.9999991290805582,
+            "is_swedish": 1.0,
+            "code_switched": 1.0,
+            "sv_stopword_rate": 0.22,
+            "en_stopword_rate": 0.14,
+            "swedish_char_rate": 0.005291005291005291,
+            "distinct_4gram": 1.0,
+            "max_4gram_repeat": 1,
+            "loop_detected": 0.0,
+            "hit_token_limit": 1.0,
+            "keyword_hit": null,
+            "char_length": 378
+          }
+        },
+        {
+          "id": "eval_09",
+          "category": "loop_trap",
+          "prompt": "Nämn fyra nordiska huvudstäder i alfabetisk ordning och avsluta sedan svaret.",
+          "response": "1. Stockholm\n2. Oslo\n3. Malmö\n4. Västerås\n5. Gothenburg\n6. Malmö\n7. Stockholm\n8. Malmö\n9. Stockholm\n10. Malmö\n11. Stockholm\n12. Stockholm\n13. Stockholm\n14. Stockholm\n15. Stockholm\n16. Stockholm\n17. Stockholm\n18. Stockholm\n19. Stockholm\n20. Stockholm\n21. Stockholm\n22. Stockholm\n23. Stockholm\n24. Stockholm\n25. Stockholm\n26. Stockholm\n27. Stockholm\n28. Stockholm\n29. Stockholm\n30. Stockholm\n31. Stockholm\n32. Stockholm",
+          "generated_tokens": 160,
+          "metrics": {
+            "sv_prob": 0.9999989481418721,
+            "is_swedish": 1.0,
+            "code_switched": 0.0,
+            "sv_stopword_rate": 0.0,
+            "en_stopword_rate": 0.0,
+            "swedish_char_rate": 0.014388489208633094,
+            "distinct_4gram": 1.0,
+            "max_4gram_repeat": 1,
+            "loop_detected": 0.0,
+            "hit_token_limit": 1.0,
+            "keyword_hit": null,
+            "char_length": 417
+          }
+        },
+        {
+          "id": "eval_10",
+          "category": "summarization",
+          "prompt": "Sammanfatta i två meningar varför källkritik är viktigt på sociala medier.",
+          "response": "Källkritik är viktigt på sociala medier för förekomst och effektivitet av social media. I det första mening, källkritik förbättrar social media medier genom att försöka att skapa en kvalitativ och relevanta konteks. Detta kan förbättra effektiviteten av social media medier och förbättra källkritiken för social media medier. I det andra mening, källkritik kan förbättra social media medier genom att förbättra källkvalitet och effektivitet av social media medier. Detta kan förbättra källkritiken för social media medier och förbättra k",
+          "generated_tokens": 160,
+          "metrics": {
+            "sv_prob": 0.9999988141636185,
+            "is_swedish": 1.0,
+            "code_switched": 0.0,
+            "sv_stopword_rate": 0.28205128205128205,
+            "en_stopword_rate": 0.0,
+            "swedish_char_rate": 0.054003724394785846,
+            "distinct_4gram": 0.9066666666666666,
+            "max_4gram_repeat": 2,
+            "loop_detected": 0.0,
+            "hit_token_limit": 1.0,
+            "keyword_hit": null,
+            "char_length": 537
+          }
+        }
+      ],
+      "regression_eval": [
+        {
+          "id": "reg_01",
+          "category": "english_qa",
+          "prompt": "Explain in two sentences why photosynthesis is essential for life on Earth.",
+          "response": "Photosynthesis is essential for life on Earth because it is the primary source of oxygen in the atmosphere, which is crucial for the survival of all living organisms, including humans. This process converts sunlight, water, and carbon dioxide into glucose and oxygen, which are essential for the growth, development, and reproduction of plants and other organisms. Without photosynthesis, the Earth would be a barren and lifeless planet, with no oxygen to support life.",
+          "generated_tokens": 89,
+          "metrics": {
+            "sv_prob": 0.0,
+            "is_swedish": 0.0,
+            "code_switched": 0.0,
+            "sv_stopword_rate": 0.0,
+            "en_stopword_rate": 0.410958904109589,
+            "swedish_char_rate": 0.0,
+            "distinct_4gram": 1.0,
+            "max_4gram_repeat": 1,
+            "loop_detected": 0.0,
+            "hit_token_limit": 0.0,
+            "keyword_hit": 1.0,
+            "char_length": 469
+          }
+        },
+        {
+          "id": "reg_02",
+          "category": "english_qa",
+          "prompt": "What is the difference between HTTP and HTTPS?",
+          "response": "HTTP (Hypertext Transfer Protocol) is a protocol used for transmitting data over a network, typically for web-based applications. It is a simple, fast, and secure protocol that allows users to access web pages and other resources on the internet. HTTP uses a connection-oriented protocol, which means that it requires a server to maintain a connection between the client and the server. This connection is established using a TCP connection, which is a type of connection-oriented protocol that uses a stream of data to transmit data over a network.\n\nHTTPS (Hypertext Transfer Protocol Secure) is an extension of the HTTP protocol that adds security features to ensure that data transmitted over the network is secure. HTTPS uses a connectionless protocol, which means that it does not require a server to maintain a connection between the client and the",
+          "generated_tokens": 160,
+          "metrics": {
+            "sv_prob": 0.0,
+            "is_swedish": 0.0,
+            "code_switched": 0.0,
+            "sv_stopword_rate": 0.0,
+            "en_stopword_rate": 0.30714285714285716,
+            "swedish_char_rate": 0.0,
+            "distinct_4gram": 0.9253731343283582,
+            "max_4gram_repeat": 2,
+            "loop_detected": 0.0,
+            "hit_token_limit": 1.0,
+            "keyword_hit": 1.0,
+            "char_length": 854
+          }
+        },
+        {
+          "id": "reg_03",
+          "category": "math",
+          "prompt": "Solve: If 3x + 7 = 22, what is the value of x? Give the final number clearly.",
+          "response": "To solve the equation \\(3x + 7 = 22\\), we need to isolate the variable \\(x\\). Here are the steps to do that:\n\n1. Start with the given equation:\n   \\[\n   3x + 7 = 22\n   \\]\n\n2. Subtract 7 from both sides of the equation to isolate the term with \\(x\\):\n   \\[\n   3x + 7 - 7 = 22 - 7\n   \\]\n   Simplifying this, we get:\n   \\[\n   3x = 15\n   \\]\n\n3. Next, divide both sides of the equation by 3 to solve for \\(x\\):\n   \\[\n   \\frac{3x}{3} =",
+          "generated_tokens": 160,
+          "metrics": {
+            "sv_prob": 0.0,
+            "is_swedish": 0.0,
+            "code_switched": 0.0,
+            "sv_stopword_rate": 0.0,
+            "en_stopword_rate": 0.3793103448275862,
+            "swedish_char_rate": 0.0,
+            "distinct_4gram": 0.9647058823529412,
+            "max_4gram_repeat": 2,
+            "loop_detected": 0.0,
+            "hit_token_limit": 1.0,
+            "keyword_hit": 1.0,
+            "char_length": 429
+          }
+        },
+        {
+          "id": "reg_04",
+          "category": "math",
+          "prompt": "A store sells apples for $2 each and oranges for $3 each. How much do 4 apples and 2 oranges cost in total?",
+          "response": "To calculate the total cost of 4 apples and 2 oranges, you would multiply the price of one apple by the number of apples and the price of one orange by the number of oranges.\n\nThe cost of 4 apples is:\n\\( 4 \\text{ apples} \\times \\$2 \\text{ per apple} = \\$8 \\)\n\nThe cost of 2 oranges is:\n\\( 2 \\text{ oranges} \\times \\$3 \\text{ per orange} = \\$6 \\)\n\nNow, add the two amounts together to get the total cost:\n\\( \\$8 + \\$6 = \\$14 \\)\n\nSo, 4 apples and 2 oranges cost a total of \\$14.",
+          "generated_tokens": 144,
+          "metrics": {
+            "sv_prob": 0.0,
+            "is_swedish": 0.0,
+            "code_switched": 0.0,
+            "sv_stopword_rate": 0.0,
+            "en_stopword_rate": 0.35135135135135137,
+            "swedish_char_rate": 0.0,
+            "distinct_4gram": 0.9587628865979382,
+            "max_4gram_repeat": 2,
+            "loop_detected": 0.0,
+            "hit_token_limit": 0.0,
+            "keyword_hit": 1.0,
+            "char_length": 476
+          }
+        },
+        {
+          "id": "reg_05",
+          "category": "swedish_math",
+          "prompt": "Vad blir 18 multiplicerat med 4? Svara med en kort mening på svenska.",
+          "response": "18 multiplicerat med 4 är 72.",
+          "generated_tokens": 14,
+          "metrics": {
+            "sv_prob": 0.9999957642891792,
+            "is_swedish": 1.0,
+            "code_switched": 0.0,
+            "sv_stopword_rate": 0.6666666666666666,
+            "en_stopword_rate": 0.0,
+            "swedish_char_rate": 0.034482758620689655,
+            "distinct_4gram": 1.0,
+            "max_4gram_repeat": 1,
+            "loop_detected": 0.0,
+            "hit_token_limit": 0.0,
+            "keyword_hit": 1.0,
+            "char_length": 29
+          }
+        }
+      ]
+    },
+    "prompt_control": {
+      "swedish_eval": [
+        {
+          "id": "eval_01",
+          "category": "general_qa",
+          "prompt": "Varför är allemansrätten viktig i Sverige?",
+          "response": "Allmän rätten i Sverige är viktig för många reasons:\n\n1. Allmän rätten är en grundläggande del av Sverige's riksdag.\n\n2. Allmän rätten är en grundläggande del av Sverige's riksdag.\n\n3. Allmän rätten är en grundläggande del av Sverige's riksdag.\n\n4. Allmän rätten är en grundläggande del av Sverige's riksdag.\n\n5. Allmän rätten är en grundläggande del av Sverige's riksdag.\n\n6. Allmän rätten är en grundläggande del av Sverige's riksdag",
+          "generated_tokens": 160,
+          "metrics": {
+            "sv_prob": 0.999997753551304,
+            "is_swedish": 1.0,
+            "code_switched": 0.0,
+            "sv_stopword_rate": 0.2898550724637681,
+            "en_stopword_rate": 0.0,
+            "swedish_char_rate": 0.06666666666666667,
+            "distinct_4gram": 0.5606060606060606,
+            "max_4gram_repeat": 6,
+            "loop_detected": 1.0,
+            "hit_token_limit": 1.0,
+            "keyword_hit": null,
+            "char_length": 435
+          }
+        },
+        {
+          "id": "eval_02",
+          "category": "general_qa",
+          "prompt": "Hur bildas norrsken på natthimlen?",
+          "response": "Norra Sverige bildas på natthimlen som en kärna.",
+          "generated_tokens": 18,
+          "metrics": {
+            "sv_prob": 0.999994193578794,
+            "is_swedish": 1.0,
+            "code_switched": 0.0,
+            "sv_stopword_rate": 0.375,
+            "en_stopword_rate": 0.0,
+            "swedish_char_rate": 0.041666666666666664,
+            "distinct_4gram": 1.0,
+            "max_4gram_repeat": 1,
+            "loop_detected": 0.0,
+            "hit_token_limit": 0.0,
+            "keyword_hit": null,
+            "char_length": 48
+          }
+        },
+        {
+          "id": "eval_03",
+          "category": "tech_qa",
+          "prompt": "Förklara vad kryptering innebär för en vanlig internetanvändare.",
+          "response": "Kryptering är en teknik som används för att säkerställa att data är inte förändrats eller förväntat. Detta gör det möjligt att använda data utan att ändra eller förvänta någon annan att ha det. I det första fall, kryptering kan användas för att säkerställa att data är inte förändrats eller förväntat. I det andra fall, kryptering kan användas för att säkerställa att data är inte förväntat att ha. Detta gör det möjligt att använda data utan att ändra eller förvänta någon annan att ha det.",
+          "generated_tokens": 150,
+          "metrics": {
+            "sv_prob": 0.9999970082910008,
+            "is_swedish": 1.0,
+            "code_switched": 0.0,
+            "sv_stopword_rate": 0.44047619047619047,
+            "en_stopword_rate": 0.0,
+            "swedish_char_rate": 0.0835030549898167,
+            "distinct_4gram": 0.6419753086419753,
+            "max_4gram_repeat": 3,
+            "loop_detected": 0.0,
+            "hit_token_limit": 0.0,
+            "keyword_hit": null,
+            "char_length": 491
+          }
+        },
+        {
+          "id": "eval_04",
+          "category": "code_switch_trap",
+          "prompt": "Vilka är fördelarna med open source-mjukvara inom offentlig sektor?",
+          "response": "I offentlig sektor kan open source-mjukvara inom formen open source innehålla fördelar som:\n\n1. Kvalitetsförståelse: Mjukvarorna kan inkludera kvalitetsförståelse för användare, som kan inkludera utveckling av tekniska skillnader och utveckling av kvalitetsförståelse.\n\n2. Kvalitetsförståelse: Mjukvarorna kan inkludera kvalitetsförståelse för organisationer, som kan inkludera utveckling av tekniska skillnader och utveckling av kvalitetsförståelse.\n\n3. Kvalitetsförståelse: Mjuk",
+          "generated_tokens": 160,
+          "metrics": {
+            "sv_prob": 0.9999955919707114,
+            "is_swedish": 1.0,
+            "code_switched": 0.0,
+            "sv_stopword_rate": 0.3076923076923077,
+            "en_stopword_rate": 0.0,
+            "swedish_char_rate": 0.03958333333333333,
+            "distinct_4gram": 0.7843137254901961,
+            "max_4gram_repeat": 2,
+            "loop_detected": 0.0,
+            "hit_token_limit": 1.0,
+            "keyword_hit": null,
+            "char_length": 480
+          }
+        },
+        {
+          "id": "eval_05",
+          "category": "code_switch_trap",
+          "prompt": "Vad innebär begreppet sustainable development inom stadsplanering?",
+          "response": "Sustainable development är en utvecklingsplanering där de viktigaste vatten och energi-utvecklingsuttryckningar är tillgängliga och effektiv för att säkerställa att de är tillgängliga för alla. Det betyder att de vatten och energi-utvecklingsuttryckningar ska följa vissa vissa månen, som:\n\n1. Vatten: Utveckla vatten-utvecklingsuttryckningar som är tillgängliga för alla, inklusive allt som kan tillgång till vatten, inklusive floden, floden, floden och floden.\n\n2. Energien: Utveckla energien som är till",
+          "generated_tokens": 160,
+          "metrics": {
+            "sv_prob": 0.9999959555499234,
+            "is_swedish": 1.0,
+            "code_switched": 0.0,
+            "sv_stopword_rate": 0.417910447761194,
+            "en_stopword_rate": 0.0,
+            "swedish_char_rate": 0.03359683794466403,
+            "distinct_4gram": 1.0,
+            "max_4gram_repeat": 1,
+            "loop_detected": 0.0,
+            "hit_token_limit": 1.0,
+            "keyword_hit": null,
+            "char_length": 506
+          }
+        },
+        {
+          "id": "eval_06",
+          "category": "instruction",
+          "prompt": "Ge tre konkreta råd för att spara energi i ett svenskt hushåll under vintern.",
+          "response": "I vinternen, det är viktigt att spara energi med hjälp av en viktig råd. Dessa råd kan vara:\n\n1. \"Vatten och energi är en viktig världsförteckning. Det är viktigt att spara energi med hjälp av vatten och energi. Detta kan vara en viktig världsförteckning för att utveckla en viktig världsförteckning.\"\n\n2. \"Vatten och energi är en viktig världsförteckning. Det är viktigt att spara energi med hjälp av vatten och energi. Detta kan vara en viktig v",
+          "generated_tokens": 160,
+          "metrics": {
+            "sv_prob": 0.9999977936337193,
+            "is_swedish": 1.0,
+            "code_switched": 0.0,
+            "sv_stopword_rate": 0.43243243243243246,
+            "en_stopword_rate": 0.0,
+            "swedish_char_rate": 0.042505592841163314,
+            "distinct_4gram": 0.6438356164383562,
+            "max_4gram_repeat": 3,
+            "loop_detected": 0.0,
+            "hit_token_limit": 1.0,
+            "keyword_hit": null,
+            "char_length": 447
+          }
+        },
+        {
+          "id": "eval_07",
+          "category": "culture",
+          "prompt": "Vad är Systembolagets huvudsakliga syfte i Sverige?",
+          "response": "Systembolagets huvudsakliga syfte i Sverige är att följa en kvalitativ och effektiv systemiskt försöka att utveckla och implementera nya teknologier och metoderna för att förbättra livet och livets effektivitet. I samband med Sverige, är det en viktig del av systembolaget att uppdatera och upprätthålla sina tekniska och logiska strukturen för att säkerställa att de är tillgängliga och effektiv för användarna.",
+          "generated_tokens": 129,
+          "metrics": {
+            "sv_prob": 0.9999978924953137,
+            "is_swedish": 1.0,
+            "code_switched": 0.0,
+            "sv_stopword_rate": 0.4166666666666667,
+            "en_stopword_rate": 0.0,
+            "swedish_char_rate": 0.0412621359223301,
+            "distinct_4gram": 1.0,
+            "max_4gram_repeat": 1,
+            "loop_detected": 0.0,
+            "hit_token_limit": 0.0,
+            "keyword_hit": null,
+            "char_length": 412
+          }
+        },
+        {
+          "id": "eval_08",
+          "category": "reasoning",
+          "prompt": "En bok kostar 240 kronor och är nedsatt med 25 procent. Vad blir det nya priset?",
+          "response": "En bok kostar 240 kronor och är nedsatt med 25 procent. Dessa bokstaver kan inte vara korrekt. Detta är en engelsk språk, men det är inte en svenska bok. Detta skulle vara ett problem om du skulle ha en svenska bok som skulle ha en bokstav på svenska. Detta skulle vara en problem om du skulle ha en svenska bok som skulle ha en bokstav på engelska. Detta skulle vara en problem om du skulle ha en svenska bok som skulle ha en bokstav på svenska. Detta skulle vara en problem om du skulle ha en svenska bok som skulle ha en bokstav på engelska.",
+          "generated_tokens": 160,
+          "metrics": {
+            "sv_prob": 0.9999967818513111,
+            "is_swedish": 1.0,
+            "code_switched": 0.0,
+            "sv_stopword_rate": 0.3592233009708738,
+            "en_stopword_rate": 0.0,
+            "swedish_char_rate": 0.014705882352941176,
+            "distinct_4gram": 0.5490196078431373,
+            "max_4gram_repeat": 4,
+            "loop_detected": 1.0,
+            "hit_token_limit": 1.0,
+            "keyword_hit": null,
+            "char_length": 544
+          }
+        },
+        {
+          "id": "eval_09",
+          "category": "loop_trap",
+          "prompt": "Nämn fyra nordiska huvudstäder i alfabetisk ordning och avsluta sedan svaret.",
+          "response": "1. Stockholm\n2. Helsinki\n3. Gothenburg\n4. Malmö\n5. Tallinn",
+          "generated_tokens": 24,
+          "metrics": {
+            "sv_prob": 0.9999975950037807,
+            "is_swedish": 1.0,
+            "code_switched": 0.0,
+            "sv_stopword_rate": 0.0,
+            "en_stopword_rate": 0.0,
+            "swedish_char_rate": 0.017241379310344827,
+            "distinct_4gram": 1.0,
+            "max_4gram_repeat": 1,
+            "loop_detected": 0.0,
+            "hit_token_limit": 0.0,
+            "keyword_hit": null,
+            "char_length": 58
+          }
+        },
+        {
+          "id": "eval_10",
+          "category": "summarization",
+          "prompt": "Sammanfatta i två meningar varför källkritik är viktigt på sociala medier.",
+          "response": "I två meningar kan källkritik vara viktiga på sociala medier:\n\n1. Källkritik kan vara viktigt för att uppskatta och upprätta sociala upplevelser. Detta kan inkludera utveckling av socialt upplevelser, utveckling av kulturen och utveckling av kulturelle källkritik.\n\n2. Källkritik kan vara viktigt för att uppskatta och upprätta sociala upplevelser. Detta kan inkludera utveckling av socialt upplevelser, utveckling av kulturen och utveckling av kulturelle källkritik. Källkritik kan också",
+          "generated_tokens": 160,
+          "metrics": {
+            "sv_prob": 0.9999960850589249,
+            "is_swedish": 1.0,
+            "code_switched": 0.0,
+            "sv_stopword_rate": 0.3384615384615385,
+            "en_stopword_rate": 0.0,
+            "swedish_char_rate": 0.02663934426229508,
+            "distinct_4gram": 0.640625,
+            "max_4gram_repeat": 2,
+            "loop_detected": 0.0,
+            "hit_token_limit": 1.0,
+            "keyword_hit": null,
+            "char_length": 488
+          }
+        }
+      ],
+      "regression_eval": [
+        {
+          "id": "reg_01",
+          "category": "english_qa",
+          "prompt": "Explain in two sentences why photosynthesis is essential for life on Earth.",
+          "response": "Photosynthesis is essential for life on Earth because it provides oxygen, which is crucial for all aerobic organisms, including humans, animals, and plants.",
+          "generated_tokens": 30,
+          "metrics": {
+            "sv_prob": 0.0,
+            "is_swedish": 0.0,
+            "code_switched": 0.0,
+            "sv_stopword_rate": 0.0,
+            "en_stopword_rate": 0.34782608695652173,
+            "swedish_char_rate": 0.0,
+            "distinct_4gram": 1.0,
+            "max_4gram_repeat": 1,
+            "loop_detected": 0.0,
+            "hit_token_limit": 0.0,
+            "keyword_hit": 1.0,
+            "char_length": 156
+          }
+        },
+        {
+          "id": "reg_02",
+          "category": "english_qa",
+          "prompt": "What is the difference between HTTP and HTTPS?",
+          "response": "The main difference between HTTP and HTTPS is the protocol used for transmitting data between a web browser and a server. HTTP is a simple, text-based protocol that is used for transmitting data between a web browser and a server. It is not secure and can be easily intercepted by attackers. HTTPS, on the other hand, uses a secure protocol called SSL/TLS to encrypt the data being transmitted between the browser and the server. This makes HTTPS much more secure and difficult to intercept.",
+          "generated_tokens": 96,
+          "metrics": {
+            "sv_prob": 0.0,
+            "is_swedish": 0.0,
+            "code_switched": 0.0,
+            "sv_stopword_rate": 0.0,
+            "en_stopword_rate": 0.3372093023255814,
+            "swedish_char_rate": 0.0,
+            "distinct_4gram": 0.9012345679012346,
+            "max_4gram_repeat": 2,
+            "loop_detected": 0.0,
+            "hit_token_limit": 0.0,
+            "keyword_hit": 1.0,
+            "char_length": 491
+          }
+        },
+        {
+          "id": "reg_03",
+          "category": "math",
+          "prompt": "Solve: If 3x + 7 = 22, what is the value of x? Give the final number clearly.",
+          "response": "To solve the equation \\(3x + 7 = 22\\), we need to isolate \\(x\\). Here are the steps:\n\n1. Subtract 7 from both sides of the equation to get rid of the constant term on the left side:\n   \\[\n   3x + 7 - 7 = 22 - 7\n   \\]\n   Simplifying this, we get:\n   \\[\n   3x = 15\n   \\]\n\n2. Next, divide both sides by 3 to solve for \\(x\\):\n   \\[\n   \\frac{3x}{3} = \\frac{15}{3}\n   \\]\n   Simplifying this, we get:\n   \\[\n   x = 5\n   \\]\n\n",
+          "generated_tokens": 160,
+          "metrics": {
+            "sv_prob": 0.0,
+            "is_swedish": 0.0,
+            "code_switched": 0.0,
+            "sv_stopword_rate": 0.0,
+            "en_stopword_rate": 0.32727272727272727,
+            "swedish_char_rate": 0.0,
+            "distinct_4gram": 0.9625,
+            "max_4gram_repeat": 2,
+            "loop_detected": 0.0,
+            "hit_token_limit": 1.0,
+            "keyword_hit": 1.0,
+            "char_length": 414
+          }
+        },
+        {
+          "id": "reg_04",
+          "category": "math",
+          "prompt": "A store sells apples for $2 each and oranges for $3 each. How much do 4 apples and 2 oranges cost in total?",
+          "response": "The total cost for 4 apples and 2 oranges would be 4 * $2 + 2 * $3 = $8 + $6 = $14.",
+          "generated_tokens": 36,
+          "metrics": {
+            "sv_prob": 0.0,
+            "is_swedish": 0.0,
+            "code_switched": 0.0,
+            "sv_stopword_rate": 0.0,
+            "en_stopword_rate": 0.4444444444444444,
+            "swedish_char_rate": 0.0,
+            "distinct_4gram": 1.0,
+            "max_4gram_repeat": 1,
+            "loop_detected": 0.0,
+            "hit_token_limit": 0.0,
+            "keyword_hit": 1.0,
+            "char_length": 83
+          }
+        },
+        {
+          "id": "reg_05",
+          "category": "swedish_math",
+          "prompt": "Vad blir 18 multiplicerat med 4? Svara med en kort mening på svenska.",
+          "response": "18 multiplicerat med 4 blir 72.",
+          "generated_tokens": 14,
+          "metrics": {
+            "sv_prob": 0.0,
+            "is_swedish": 1.0,
+            "code_switched": 1.0,
+            "sv_stopword_rate": 0.3333333333333333,
+            "en_stopword_rate": 0.0,
+            "swedish_char_rate": 0.0,
+            "distinct_4gram": 1.0,
+            "max_4gram_repeat": 1,
+            "loop_detected": 0.0,
+            "hit_token_limit": 0.0,
+            "keyword_hit": 1.0,
+            "char_length": 31
+          }
+        }
+      ]
+    },
+    "activation_steering": {
+      "swedish_eval": [
+        {
+          "id": "eval_01",
+          "category": "general_qa",
+          "prompt": "Varför är allemansrätten viktig i Sverige?",
+          "response": "Allmänrätten i Sverige är viktig för många sätt:\n\n1. Sverige är en del av den europeiska unionen, som är en del av de europeiska unionen som är en del av de europeiska unionen som är en del av de europeiska unionen som är en del av de europeiska unionen som är en del av de europeiska unionen som är en del av de europeiska unionen som är en del av de europeiska unionen som är en del av de europeiska unionen som är en del av de europeiska unionen som är en del av de europeiska unionen som är en del av de europeiska unionen som är en del av de europeiska unionen som är en del av de europeiska",
+          "generated_tokens": 160,
+          "metrics": {
+            "sv_prob": 0.9999956973978883,
+            "is_swedish": 1.0,
+            "code_switched": 0.0,
+            "sv_stopword_rate": 0.5966386554621849,
+            "en_stopword_rate": 0.0,
+            "swedish_char_rate": 0.03355704697986577,
+            "distinct_4gram": 0.20512820512820512,
+            "max_4gram_repeat": 14,
+            "loop_detected": 1.0,
+            "hit_token_limit": 1.0,
+            "keyword_hit": null,
+            "char_length": 596
+          }
+        },
+        {
+          "id": "eval_02",
+          "category": "general_qa",
+          "prompt": "Hur bildas norrsken på natthimlen?",
+          "response": "Norrland, eller Norra Sverige, är en del av den svenska regnet. Det är en del av den österrikiska regnet, som är en del av den europeiska regnet. Det är en del av den europeiska regnet, som är en del av den europeiska regnet. Det är en del av den europeiska regnet, som är en del av den europeiska regnet. Det är en del av den europeiska regnet, som är en del av den europeiska regnet. Det är en del av den europeiska regnet, som är en del av den europeiska regnet. Det är en del av den europeiska regnet, som är en del av den europeiska regnet. Det är en del av den europe",
+          "generated_tokens": 160,
+          "metrics": {
+            "sv_prob": 0.7142838791511241,
+            "is_swedish": 1.0,
+            "code_switched": 0.0,
+            "sv_stopword_rate": 0.6140350877192983,
+            "en_stopword_rate": 0.0,
+            "swedish_char_rate": 0.02617801047120419,
+            "distinct_4gram": 0.23423423423423423,
+            "max_4gram_repeat": 14,
+            "loop_detected": 1.0,
+            "hit_token_limit": 1.0,
+            "keyword_hit": null,
+            "char_length": 573
+          }
+        },
+        {
+          "id": "eval_03",
+          "category": "tech_qa",
+          "prompt": "Förklara vad kryptering innebär för en vanlig internetanvändare.",
+          "response": "Kryptering är en teknik som används för att säkerställa att data är inte innehållit av andra personer. Detta är en viktig del av säkerhetsläge och är en del av alla möjligheter att säkerställa att data är innehållit av personer som är tillgängliga.\n\nKryptering kan vara avseende på olika sätt:\n\n1. Symmetrisch kryptering: Denna kryptering används för att säkerställa att data är inte innehållit av andra personer. Detta kan vara avseende på att använda en krypterad lösenord för att läsa eller skapa data.\n\n2",
+          "generated_tokens": 160,
+          "metrics": {
+            "sv_prob": 0.9999980536594163,
+            "is_swedish": 1.0,
+            "code_switched": 0.0,
+            "sv_stopword_rate": 0.4567901234567901,
+            "en_stopword_rate": 0.0,
+            "swedish_char_rate": 0.0610236220472441,
+            "distinct_4gram": 0.8375,
+            "max_4gram_repeat": 3,
+            "loop_detected": 0.0,
+            "hit_token_limit": 1.0,
+            "keyword_hit": null,
+            "char_length": 508
+          }
+        },
+        {
+          "id": "eval_04",
+          "category": "code_switch_trap",
+          "prompt": "Vilka är fördelarna med open source-mjukvara inom offentlig sektor?",
+          "response": "I en offentlig sektor, inklusive företag och organisationer, kan open source-mjukvara inom en kvalitets- och kundenservice-området fördela fördelar som följer av en kvalitets- och kundenservice-området:\n\n1. Kvalitets- och kundenservice-området:\n- Kvalitets- och kundenservice-området är en kvalitets- och kundenservice-området som följer en kvalitets- och kundenservice-området. Detta innebär att det är en kvalitets- och kundenservice-området",
+          "generated_tokens": 160,
+          "metrics": {
+            "sv_prob": 0.9999989668064106,
+            "is_swedish": 1.0,
+            "code_switched": 0.0,
+            "sv_stopword_rate": 0.3728813559322034,
+            "en_stopword_rate": 0.0,
+            "swedish_char_rate": 0.033860045146726865,
+            "distinct_4gram": 0.94,
+            "max_4gram_repeat": 3,
+            "loop_detected": 0.0,
+            "hit_token_limit": 1.0,
+            "keyword_hit": null,
+            "char_length": 443
+          }
+        },
+        {
+          "id": "eval_05",
+          "category": "code_switch_trap",
+          "prompt": "Vad innebär begreppet sustainable development inom stadsplanering?",
+          "response": "Sustainable development erar en termen som har stående betydning i stadsplanering. Dette betyder:\n\n1. Energi- og energiutveckling: Sustainable development betyder at man er på en måte, at de energier og energiutveckling er etterligere etablerd, etablerd og etablerd.\n\n2. Klima- og miljøutveckling: Sustainable development betyder at man er på en måte, at de klima- og miljøutveckling er etterligere etablerd, etablerd og etablerd.\n\n3. Kultur- og ekonomiutveckling: Sustainable development bety",
+          "generated_tokens": 160,
+          "metrics": {
+            "sv_prob": 0.0,
+            "is_swedish": 1.0,
+            "code_switched": 1.0,
+            "sv_stopword_rate": 0.16417910447761194,
+            "en_stopword_rate": 0.0,
+            "swedish_char_rate": 0.010141987829614604,
+            "distinct_4gram": 0.8307692307692308,
+            "max_4gram_repeat": 2,
+            "loop_detected": 0.0,
+            "hit_token_limit": 1.0,
+            "keyword_hit": null,
+            "char_length": 493
+          }
+        },
+        {
+          "id": "eval_06",
+          "category": "instruction",
+          "prompt": "Ge tre konkreta råd för att spara energi i ett svenskt hushåll under vintern.",
+          "response": "Detta är en viktig och viktigt svar på en viktig fråga om energi spara och vintern. Detta är en viktig del av den viktigaste strategier för att spara energi och att utveckla en viktig och viktiga värld. \n\nDet finns en viktig och viktiga värld som har en viktig och viktiga värld, och det är viktigt att spara energi och utveckla världen. Detta kan vara en viktig del av att spara energi och utveckla världen.\n\nDet finns en viktig och viktiga värld som har en viktig och viktiga värld",
+          "generated_tokens": 160,
+          "metrics": {
+            "sv_prob": 0.9999975079092578,
+            "is_swedish": 1.0,
+            "code_switched": 0.0,
+            "sv_stopword_rate": 0.4659090909090909,
+            "en_stopword_rate": 0.0,
+            "swedish_char_rate": 0.026915113871635612,
+            "distinct_4gram": 0.7764705882352941,
+            "max_4gram_repeat": 5,
+            "loop_detected": 1.0,
+            "hit_token_limit": 1.0,
+            "keyword_hit": null,
+            "char_length": 483
+          }
+        },
+        {
+          "id": "eval_07",
+          "category": "culture",
+          "prompt": "Vad är Systembolagets huvudsakliga syfte i Sverige?",
+          "response": "Systembolagets huvudsakliga syfte i Sverige är att följa en kvalitativ och effektivt försäljning av teknologi och software för att utveckla en bättre liv och livet för dem som villa att ha en bättre liv. I Sverige är det viktigt att följa en kvalitativ och effektivt försäljning av teknologi och software, som kan förekomma försökan som försöker utveckla en bättre liv för dem som villa att ha en bättre liv.\n\nSystembolaget är en del av en flera delar som följer en kvalitativ och eff",
+          "generated_tokens": 160,
+          "metrics": {
+            "sv_prob": 0.9999953746233474,
+            "is_swedish": 1.0,
+            "code_switched": 0.0,
+            "sv_stopword_rate": 0.43373493975903615,
+            "en_stopword_rate": 0.0,
+            "swedish_char_rate": 0.045454545454545456,
+            "distinct_4gram": 0.825,
+            "max_4gram_repeat": 2,
+            "loop_detected": 0.0,
+            "hit_token_limit": 1.0,
+            "keyword_hit": null,
+            "char_length": 484
+          }
+        },
+        {
+          "id": "eval_08",
+          "category": "reasoning",
+          "prompt": "En bok kostar 240 kronor och är nedsatt med 25 procent. Vad blir det nya priset?",
+          "response": "Detta är en typisk kalkyl och kalkylbok. Om du har 240 kronor och 25 procent kalkylbok, kan du få följande priset:\n\n240 kronor + 240 kronor * 25 procent = 240 kronor + 60 kronor = 300 kronor\n\nDetta är en kalkylbok som är nedsatt med 25 procent och kostar 300 kronor.",
+          "generated_tokens": 116,
+          "metrics": {
+            "sv_prob": 0.9999976651458876,
+            "is_swedish": 1.0,
+            "code_switched": 0.0,
+            "sv_stopword_rate": 0.35135135135135137,
+            "en_stopword_rate": 0.0,
+            "swedish_char_rate": 0.018796992481203006,
+            "distinct_4gram": 1.0,
+            "max_4gram_repeat": 1,
+            "loop_detected": 0.0,
+            "hit_token_limit": 0.0,
+            "keyword_hit": null,
+            "char_length": 266
+          }
+        },
+        {
+          "id": "eval_09",
+          "category": "loop_trap",
+          "prompt": "Nämn fyra nordiska huvudstäder i alfabetisk ordning och avsluta sedan svaret.",
+          "response": "1. Stockholm\n2. Oslo\n3. Malmö\n4. Västerås\n5. Gothenburg\n6. Djurgården\n7. Malmö\n8. Stockholm\n9. Västerås\n10. Gothenburg\n11. Malmö\n12. Stockholm\n13. Västerås\n14. Gothenburg\n15. Stockholm\n16. Västerås\n17. Gothenburg\n18. Stockholm\n19. Västerås\n20. Gothenburg",
+          "generated_tokens": 128,
+          "metrics": {
+            "sv_prob": 0.9999961009038683,
+            "is_swedish": 1.0,
+            "code_switched": 0.0,
+            "sv_stopword_rate": 0.0,
+            "en_stopword_rate": 0.0,
+            "swedish_char_rate": 0.05511811023622047,
+            "distinct_4gram": 1.0,
+            "max_4gram_repeat": 1,
+            "loop_detected": 0.0,
+            "hit_token_limit": 0.0,
+            "keyword_hit": null,
+            "char_length": 254
+          }
+        },
+        {
+          "id": "eval_10",
+          "category": "summarization",
+          "prompt": "Sammanfatta i två meningar varför källkritik är viktigt på sociala medier.",
+          "response": "Källkritik är viktigt på sociala medier för förekomma och försäljande av socialt kontekst. Detta kan vara följande:\n\n1. Källkritik kan förbättra kontekstens relevanta och relevanta innehåll. Källkritik kan förhindra att socialt kontekst inte är tillgängligt eller inte tillgängligt för användare.\n\n2. Källkritik kan förbättra kontekstens effektivitet och effektivitet. Källkritik kan förhindra att kontekstet inte är tillgängligt eller inte tillgängligt för användare.\n\n3. Källkritik kan förbättra kont",
+          "generated_tokens": 160,
+          "metrics": {
+            "sv_prob": 0.9999968752799033,
+            "is_swedish": 1.0,
+            "code_switched": 0.0,
+            "sv_stopword_rate": 0.3968253968253968,
+            "en_stopword_rate": 0.0,
+            "swedish_char_rate": 0.06374501992031872,
+            "distinct_4gram": 0.8888888888888888,
+            "max_4gram_repeat": 2,
+            "loop_detected": 0.0,
+            "hit_token_limit": 1.0,
+            "keyword_hit": null,
+            "char_length": 502
+          }
+        }
+      ],
+      "regression_eval": [
+        {
+          "id": "reg_01",
+          "category": "english_qa",
+          "prompt": "Explain in two sentences why photosynthesis is essential for life on Earth.",
+          "response": "Photosynthesis is essential for life on Earth because it is the primary source of oxygen in the atmosphere, which is crucial for the survival of all living organisms, including humans. This process converts sunlight, water, and carbon dioxide into glucose and oxygen, which are essential for the growth, development, and reproduction of plants and other organisms. Without photosynthesis, the Earth would be a barren and lifeless planet, with no oxygen to support life.",
+          "generated_tokens": 89,
+          "metrics": {
+            "sv_prob": 0.0,
+            "is_swedish": 0.0,
+            "code_switched": 0.0,
+            "sv_stopword_rate": 0.0,
+            "en_stopword_rate": 0.410958904109589,
+            "swedish_char_rate": 0.0,
+            "distinct_4gram": 1.0,
+            "max_4gram_repeat": 1,
+            "loop_detected": 0.0,
+            "hit_token_limit": 0.0,
+            "keyword_hit": 1.0,
+            "char_length": 469
+          }
+        },
+        {
+          "id": "reg_02",
+          "category": "english_qa",
+          "prompt": "What is the difference between HTTP and HTTPS?",
+          "response": "HTTP (Hypertext Transfer Protocol) and HTTPS (Hypertext Transfer Protocol Secure) are both protocols used for transmitting data over the internet, but they serve different purposes and have distinct characteristics.\n\n### HTTP (Hypertext Transfer Protocol)\n- **Purpose**: HTTP is primarily used for transmitting web pages and other types of data over the internet. It is designed to provide a secure, reliable, and efficient way to transfer data between a web server and a client.\n- **Features**:\n  - **Secure**: HTTP is designed to be secure, which means that data transmitted over HTTP is encrypted to protect it from eavesdropping.\n  - **Transports**: HTTP uses TCP (Transmission Control Protocol) to establish a connection between the client and the server.\n  - **Authentication**: HTTP supports",
+          "generated_tokens": 160,
+          "metrics": {
+            "sv_prob": 0.0,
+            "is_swedish": 0.0,
+            "code_switched": 0.0,
+            "sv_stopword_rate": 0.0,
+            "en_stopword_rate": 0.26548672566371684,
+            "swedish_char_rate": 0.0,
+            "distinct_4gram": 0.9913793103448276,
+            "max_4gram_repeat": 2,
+            "loop_detected": 0.0,
+            "hit_token_limit": 1.0,
+            "keyword_hit": 1.0,
+            "char_length": 798
+          }
+        },
+        {
+          "id": "reg_03",
+          "category": "math",
+          "prompt": "Solve: If 3x + 7 = 22, what is the value of x? Give the final number clearly.",
+          "response": "To solve the equation \\(3x + 7 = 22\\), we need to isolate the variable \\(x\\). Here are the steps to do that:\n\n1. Start with the given equation:\n   \\[\n   3x + 7 = 22\n   \\]\n\n2. Subtract 7 from both sides of the equation to isolate the term with \\(x\\):\n   \\[\n   3x + 7 - 7 = 22 - 7\n   \\]\n   Simplifying this, we get:\n   \\[\n   3x = 15\n   \\]\n\n3. Next, divide both sides of the equation by 3 to solve for \\(x\\):\n   \\[\n   \\frac{3x}{3} =",
+          "generated_tokens": 160,
+          "metrics": {
+            "sv_prob": 0.0,
+            "is_swedish": 0.0,
+            "code_switched": 0.0,
+            "sv_stopword_rate": 0.0,
+            "en_stopword_rate": 0.3793103448275862,
+            "swedish_char_rate": 0.0,
+            "distinct_4gram": 0.9647058823529412,
+            "max_4gram_repeat": 2,
+            "loop_detected": 0.0,
+            "hit_token_limit": 1.0,
+            "keyword_hit": 1.0,
+            "char_length": 429
+          }
+        },
+        {
+          "id": "reg_04",
+          "category": "math",
+          "prompt": "A store sells apples for $2 each and oranges for $3 each. How much do 4 apples and 2 oranges cost in total?",
+          "response": "To calculate the total cost of 4 apples and 2 oranges, you simply add the cost of each type of fruit together:\n\n- Cost of 4 apples: \\( 4 \\text{ apples} \\times \\$2 \\text{ per apple} = \\$8 \\)\n- Cost of 2 oranges: \\( 2 \\text{ oranges} \\times \\$3 \\text{ per orange} = \\$6 \\)\n\nNow, add the two amounts together:\n\n\\( \\$8 + \\$6 = \\$14 \\)\n\nSo, 4 apples and 2 oranges cost a total of \\$14.",
+          "generated_tokens": 124,
+          "metrics": {
+            "sv_prob": 0.0,
+            "is_swedish": 0.0,
+            "code_switched": 0.0,
+            "sv_stopword_rate": 0.0,
+            "en_stopword_rate": 0.23076923076923078,
+            "swedish_char_rate": 0.0,
+            "distinct_4gram": 0.987012987012987,
+            "max_4gram_repeat": 2,
+            "loop_detected": 0.0,
+            "hit_token_limit": 0.0,
+            "keyword_hit": 1.0,
+            "char_length": 380
+          }
+        },
+        {
+          "id": "reg_05",
+          "category": "swedish_math",
+          "prompt": "Vad blir 18 multiplicerat med 4? Svara med en kort mening på svenska.",
+          "response": "18 multiplicerat med 4 blir 72.",
+          "generated_tokens": 14,
+          "metrics": {
+            "sv_prob": 0.0,
+            "is_swedish": 1.0,
+            "code_switched": 1.0,
+            "sv_stopword_rate": 0.3333333333333333,
+            "en_stopword_rate": 0.0,
+            "swedish_char_rate": 0.0,
+            "distinct_4gram": 1.0,
+            "max_4gram_repeat": 1,
+            "loop_detected": 0.0,
+            "hit_token_limit": 0.0,
+            "keyword_hit": 1.0,
+            "char_length": 31
+          }
+        }
+      ]
+    },
+    "random_weight_edit": {
+      "swedish_eval": [
+        {
+          "id": "eval_01",
+          "category": "general_qa",
+          "prompt": "Varför är allemansrätten viktig i Sverige?",
+          "response": "Alemansrätten i Sverige är viktig för många sätt:\n\n1. Sverige är en del av Sverige, och det är en del av Sverige som är viktig för Sverige som en del av Sverige.\n\n2. Sverige är en del av Sverige, och det är en del av Sverige som är viktig för Sverige som en del av Sverige.\n\n3. Sverige är en del av Sverige, och det är en del av Sverige som är viktig för Sverige som en del av Sverige.\n\n4. Sverige är en del av Sverige, och det är en del av Sverige som är viktig för Sverige som en del av Sverige.\n\n5. Sverige är en del av Sverige",
+          "generated_tokens": 160,
+          "metrics": {
+            "sv_prob": 0.9999978048778192,
+            "is_swedish": 1.0,
+            "code_switched": 0.0,
+            "sv_stopword_rate": 0.5754716981132075,
+            "en_stopword_rate": 0.0,
+            "swedish_char_rate": 0.04150943396226415,
+            "distinct_4gram": 0.4074074074074074,
+            "max_4gram_repeat": 9,
+            "loop_detected": 1.0,
+            "hit_token_limit": 1.0,
+            "keyword_hit": null,
+            "char_length": 530
+          }
+        },
+        {
+          "id": "eval_02",
+          "category": "general_qa",
+          "prompt": "Hur bildas norrsken på natthimlen?",
+          "response": "Norrland är en del av Norge, och det är en del av Norge som är under nätet. Det är inte en del av Norge som är under nätet. Det är en del av Norge som är under nätet, men det är inte en del av Norge som är under nätet. Det är en del av Norge som är under nätet, men det är inte en del av Norge som är under nätet. Det är en del av Norge som är under nätet, men det är inte en del av Norge som är under nätet. Det är en del av Norge som är under nätet, men det är inte en del av Norge som är under nätet.",
+          "generated_tokens": 160,
+          "metrics": {
+            "sv_prob": 0.9999985624321029,
+            "is_swedish": 1.0,
+            "code_switched": 0.0,
+            "sv_stopword_rate": 0.6293103448275862,
+            "en_stopword_rate": 0.0,
+            "swedish_char_rate": 0.061630218687872766,
+            "distinct_4gram": 0.23893805309734514,
+            "max_4gram_repeat": 10,
+            "loop_detected": 1.0,
+            "hit_token_limit": 1.0,
+            "keyword_hit": null,
+            "char_length": 503
+          }
+        },
+        {
+          "id": "eval_03",
+          "category": "tech_qa",
+          "prompt": "Förklara vad kryptering innebär för en vanlig internetanvändare.",
+          "response": "Kryptering är en teknik som används för att säkerställa att data är inte innehållad av andra personer. Detta gör det möjligt att göra användning av data inte inom en krypterad system, men inte att använda den i en krypterad system. Kryptering är en viktig del av säkerhetslära och är en viktig del av säkerhetssystemet.\n\nKryptering kan användas för att:\n\n1. Säkerhetsnivå: Kryptering kan användas för att säkerställa att data är inte innehållad av andra personer. Detta gör det möjligt att göra användning av data inte",
+          "generated_tokens": 160,
+          "metrics": {
+            "sv_prob": 0.999996357397514,
+            "is_swedish": 1.0,
+            "code_switched": 0.0,
+            "sv_stopword_rate": 0.47619047619047616,
+            "en_stopword_rate": 0.0,
+            "swedish_char_rate": 0.059845559845559844,
+            "distinct_4gram": 0.7439024390243902,
+            "max_4gram_repeat": 2,
+            "loop_detected": 0.0,
+            "hit_token_limit": 1.0,
+            "keyword_hit": null,
+            "char_length": 518
+          }
+        },
+        {
+          "id": "eval_04",
+          "category": "code_switch_trap",
+          "prompt": "Vilka är fördelarna med open source-mjukvara inom offentlig sektor?",
+          "response": "I en offentlig sektor, inklusive företag och organisationer, kan open source-mjukvara inom en kvalifiserad och effektiv system behövs för att fördelas fördelarna. Dessa fördelar kan inkludera:\n\n1. Kvalitetsförståelse: Mjukvara kan förhindra att försöka skapa kvalifiserad produkter eller serviserna, genom att försöka skapa en kvalifiserad och effektiv system.\n\n2. Kvalitetskontroll: Mjukvara kan förhindra att försöka skapa kvalitetskontroller och kontrollsystemer, som kan skapa",
+          "generated_tokens": 160,
+          "metrics": {
+            "sv_prob": 0.9999970274142291,
+            "is_swedish": 1.0,
+            "code_switched": 0.0,
+            "sv_stopword_rate": 0.31666666666666665,
+            "en_stopword_rate": 0.0,
+            "swedish_char_rate": 0.03333333333333333,
+            "distinct_4gram": 0.9310344827586207,
+            "max_4gram_repeat": 2,
+            "loop_detected": 0.0,
+            "hit_token_limit": 1.0,
+            "keyword_hit": null,
+            "char_length": 480
+          }
+        },
+        {
+          "id": "eval_05",
+          "category": "code_switch_trap",
+          "prompt": "Vad innebär begreppet sustainable development inom stadsplanering?",
+          "response": "Sustainable development erar en termen som har styrka med mål på å utvikle og håndtere ekosystemet og å utvikle en livspenere. Dette er en omfattende mål som er omfattet av å utvikle en livspenere, å utvikle en ekosystem, å utvikle en livspenere og å utvikle en livspenere. \n\nSustainable development er en mål som er omfattet av å utvikle en livspenere, å utvikle en ekosystem, å utvikle en livspenere og å utvikle en livspenere. Dette er en omfattende mål",
+          "generated_tokens": 160,
+          "metrics": {
+            "sv_prob": 0.0,
+            "is_swedish": 1.0,
+            "code_switched": 1.0,
+            "sv_stopword_rate": 0.2692307692307692,
+            "en_stopword_rate": 0.0,
+            "swedish_char_rate": 0.03508771929824561,
+            "distinct_4gram": 0.6533333333333333,
+            "max_4gram_repeat": 3,
+            "loop_detected": 0.0,
+            "hit_token_limit": 1.0,
+            "keyword_hit": null,
+            "char_length": 456
+          }
+        },
+        {
+          "id": "eval_06",
+          "category": "instruction",
+          "prompt": "Ge tre konkreta råd för att spara energi i ett svenskt hushåll under vintern.",
+          "response": "Det är en viktig och viktigt råd för att spara energi i ett svenskt hushåll. Detta är en viktig del av den viktigaste strategier för att spara energi och att utveckla en viktigare kultur i ett land. I den här råd kan vi se till att:\n\n1. Vissa styrkor och energi- och waterstyrkor har en viktig kvalitet och är viktiga för att spara energi.\n\n2. Vissa styrkor har en viktig kvalitet och är viktiga för att spara energi.\n\n3. Vissa styrkor har en viktig kvalitet och är viktiga för att spara energ",
+          "generated_tokens": 160,
+          "metrics": {
+            "sv_prob": 0.9999978258649906,
+            "is_swedish": 1.0,
+            "code_switched": 0.0,
+            "sv_stopword_rate": 0.4606741573033708,
+            "en_stopword_rate": 0.0,
+            "swedish_char_rate": 0.028397565922920892,
+            "distinct_4gram": 0.797752808988764,
+            "max_4gram_repeat": 3,
+            "loop_detected": 0.0,
+            "hit_token_limit": 1.0,
+            "keyword_hit": null,
+            "char_length": 493
+          }
+        },
+        {
+          "id": "eval_07",
+          "category": "culture",
+          "prompt": "Vad är Systembolagets huvudsakliga syfte i Sverige?",
+          "response": "Systembolagets huvudsakliga syfte i Sverige är att försöka upprätthålla en bättre utvecklingsprocess för att följa utvecklingssteg och att försöka utveckla sig som en viktig del av den svenska utvecklingsprocess. I Sverige är det en viktig del av utvecklingssteg att upprätthålla en bättre utvecklingsprocess och att försöka utveckla sig som en viktig del av den svenska utvecklingsprocess. Systembolaget är en del av den svenska utvecklingsprocess och är en viktig del av det svenska utvecklingssteg.",
+          "generated_tokens": 160,
+          "metrics": {
+            "sv_prob": 0.9999976406786777,
+            "is_swedish": 1.0,
+            "code_switched": 0.0,
+            "sv_stopword_rate": 0.4383561643835616,
+            "en_stopword_rate": 0.0,
+            "swedish_char_rate": 0.03592814371257485,
+            "distinct_4gram": 0.8,
+            "max_4gram_repeat": 4,
+            "loop_detected": 1.0,
+            "hit_token_limit": 1.0,
+            "keyword_hit": null,
+            "char_length": 501
+          }
+        },
+        {
+          "id": "eval_08",
+          "category": "reasoning",
+          "prompt": "En bok kostar 240 kronor och är nedsatt med 25 procent. Vad blir det nya priset?",
+          "response": "Detta är en kvalitativ problem och inte en standardkalkyl. Detta är en specifikt kalkyl som kan vara olika för olika kalkylare. \n\nDetta kalkyl kan vara:\n\n1. Kalkyl som är specifikt för bokstäver och kalkylare som är specifikt för bokstäver.\n2. Kalkyl som är specifikt för bokstäver och kalkylare som är specifikt för bokstäver.\n3. Kalkyl som är specifikt för bokstäver och kalkylare som är specifikt för bokstäver.\n4. Kalkyl som är specifikt för bokstäver och kalk",
+          "generated_tokens": 160,
+          "metrics": {
+            "sv_prob": 0.9999985350361843,
+            "is_swedish": 1.0,
+            "code_switched": 0.0,
+            "sv_stopword_rate": 0.5,
+            "en_stopword_rate": 0.0,
+            "swedish_char_rate": 0.05172413793103448,
+            "distinct_4gram": 0.6575342465753424,
+            "max_4gram_repeat": 7,
+            "loop_detected": 1.0,
+            "hit_token_limit": 1.0,
+            "keyword_hit": null,
+            "char_length": 464
+          }
+        },
+        {
+          "id": "eval_09",
+          "category": "loop_trap",
+          "prompt": "Nämn fyra nordiska huvudstäder i alfabetisk ordning och avsluta sedan svaret.",
+          "response": "1. Stockholm\n2. Oslo\n3. Malmö\n4. Västerås\n5. Gothenburg\n6. Malmö\n7. Stockholm\n8. Malmö\n9. Stockholm\n10. Malmö\n11. Stockholm\n12. Stockholm\n13. Stockholm\n14. Stockholm\n15. Stockholm\n16. Stockholm\n17. Stockholm\n18. Stockholm\n19. Stockholm\n20. Stockholm\n21. Stockholm\n22. Stockholm\n23. Stockholm\n24. Stockholm\n25. Stockholm\n26. Stockholm\n27. Stockholm\n28. Stockholm\n29. Stockholm\n30. Stockholm\n31. Stockholm\n32. Stockholm",
+          "generated_tokens": 160,
+          "metrics": {
+            "sv_prob": 0.9999989481418721,
+            "is_swedish": 1.0,
+            "code_switched": 0.0,
+            "sv_stopword_rate": 0.0,
+            "en_stopword_rate": 0.0,
+            "swedish_char_rate": 0.014388489208633094,
+            "distinct_4gram": 1.0,
+            "max_4gram_repeat": 1,
+            "loop_detected": 0.0,
+            "hit_token_limit": 1.0,
+            "keyword_hit": null,
+            "char_length": 417
+          }
+        },
+        {
+          "id": "eval_10",
+          "category": "summarization",
+          "prompt": "Sammanfatta i två meningar varför källkritik är viktigt på sociala medier.",
+          "response": "Källkritik är viktigt på sociala medier för förekomst och effektivitet av social media. I det första mening, källkritik förbättrar social media medier genom att försöka att skapa en kvalitativ och relevanta konteks. Detta kan förbättra effektiviteten av social media medier och förbättra källkort för social media medier. I det andra mening, källkritik kan förbättra social media medier genom att förbättra källkort och förståsutlighet. Detta kan förbättra källkort för social media medier och förbättra källkort för",
+          "generated_tokens": 160,
+          "metrics": {
+            "sv_prob": 0.9999970784325445,
+            "is_swedish": 1.0,
+            "code_switched": 0.0,
+            "sv_stopword_rate": 0.29333333333333333,
+            "en_stopword_rate": 0.0,
+            "swedish_char_rate": 0.06395348837209303,
+            "distinct_4gram": 0.8888888888888888,
+            "max_4gram_repeat": 2,
+            "loop_detected": 0.0,
+            "hit_token_limit": 1.0,
+            "keyword_hit": null,
+            "char_length": 516
+          }
+        }
+      ],
+      "regression_eval": [
+        {
+          "id": "reg_01",
+          "category": "english_qa",
+          "prompt": "Explain in two sentences why photosynthesis is essential for life on Earth.",
+          "response": "Photosynthesis is essential for life on Earth because it is the primary source of oxygen in the atmosphere, which is crucial for the survival of all living organisms, including humans. This process converts sunlight, water, and carbon dioxide into glucose and oxygen, which are essential for the growth, development, and reproduction of plants and other organisms. Without photosynthesis, the Earth would be a barren and lifeless planet, with no oxygen to support life.",
+          "generated_tokens": 89,
+          "metrics": {
+            "sv_prob": 0.0,
+            "is_swedish": 0.0,
+            "code_switched": 0.0,
+            "sv_stopword_rate": 0.0,
+            "en_stopword_rate": 0.410958904109589,
+            "swedish_char_rate": 0.0,
+            "distinct_4gram": 1.0,
+            "max_4gram_repeat": 1,
+            "loop_detected": 0.0,
+            "hit_token_limit": 0.0,
+            "keyword_hit": 1.0,
+            "char_length": 469
+          }
+        },
+        {
+          "id": "reg_02",
+          "category": "english_qa",
+          "prompt": "What is the difference between HTTP and HTTPS?",
+          "response": "HTTP (Hypertext Transfer Protocol) is a protocol used for transmitting data over a network, typically for web-based applications. It is a simple, fast, and secure protocol that allows users to access web pages and other resources on the internet. HTTP uses a connection-oriented protocol, which means that it requires a server to maintain a connection between the client and the server. This connection is established using a TCP connection, which is a type of connection-oriented protocol that uses a stream of data to transmit data over a network.\n\nHTTPS (Hypertext Transfer Protocol Secure) is an extension of the HTTP protocol that adds security features to the protocol. HTTPS uses a connectionless protocol, which means that it does not require a server to maintain a connection between the client and the server. Instead, HTTPS uses a",
+          "generated_tokens": 160,
+          "metrics": {
+            "sv_prob": 0.0,
+            "is_swedish": 0.0,
+            "code_switched": 0.0,
+            "sv_stopword_rate": 0.0,
+            "en_stopword_rate": 0.2971014492753623,
+            "swedish_char_rate": 0.0,
+            "distinct_4gram": 0.9166666666666666,
+            "max_4gram_repeat": 2,
+            "loop_detected": 0.0,
+            "hit_token_limit": 1.0,
+            "keyword_hit": 1.0,
+            "char_length": 841
+          }
+        },
+        {
+          "id": "reg_03",
+          "category": "math",
+          "prompt": "Solve: If 3x + 7 = 22, what is the value of x? Give the final number clearly.",
+          "response": "To solve the equation \\(3x + 7 = 22\\), we need to isolate the variable \\(x\\). Here are the steps to do that:\n\n1. Start with the given equation:\n   \\[\n   3x + 7 = 22\n   \\]\n\n2. Subtract 7 from both sides of the equation to isolate the term with \\(x\\):\n   \\[\n   3x + 7 - 7 = 22 - 7\n   \\]\n   Simplifying this, we get:\n   \\[\n   3x = 15\n   \\]\n\n3. Next, divide both sides of the equation by 3 to solve for \\(x\\):\n   \\[\n   \\frac{3x}{3} =",
+          "generated_tokens": 160,
+          "metrics": {
+            "sv_prob": 0.0,
+            "is_swedish": 0.0,
+            "code_switched": 0.0,
+            "sv_stopword_rate": 0.0,
+            "en_stopword_rate": 0.3793103448275862,
+            "swedish_char_rate": 0.0,
+            "distinct_4gram": 0.9647058823529412,
+            "max_4gram_repeat": 2,
+            "loop_detected": 0.0,
+            "hit_token_limit": 1.0,
+            "keyword_hit": 1.0,
+            "char_length": 429
+          }
+        },
+        {
+          "id": "reg_04",
+          "category": "math",
+          "prompt": "A store sells apples for $2 each and oranges for $3 each. How much do 4 apples and 2 oranges cost in total?",
+          "response": "To calculate the total cost of 4 apples and 2 oranges, you would multiply the price of one apple by the number of apples and the price of one orange by the number of oranges.\n\nThe cost of 4 apples is:\n\\( 4 \\text{ apples} \\times \\$2 \\text{ per apple} = \\$8 \\)\n\nThe cost of 2 oranges is:\n\\( 2 \\text{ oranges} \\times \\$3 \\text{ per orange} = \\$6 \\)\n\nNow, add the two amounts together to get the total cost:\n\\( \\$8 + \\$6 = \\$14 \\)\n\nSo, 4 apples and 2 oranges cost a total of $14.",
+          "generated_tokens": 144,
+          "metrics": {
+            "sv_prob": 0.0,
+            "is_swedish": 0.0,
+            "code_switched": 0.0,
+            "sv_stopword_rate": 0.0,
+            "en_stopword_rate": 0.35135135135135137,
+            "swedish_char_rate": 0.0,
+            "distinct_4gram": 0.9587628865979382,
+            "max_4gram_repeat": 2,
+            "loop_detected": 0.0,
+            "hit_token_limit": 0.0,
+            "keyword_hit": 1.0,
+            "char_length": 475
+          }
+        },
+        {
+          "id": "reg_05",
+          "category": "swedish_math",
+          "prompt": "Vad blir 18 multiplicerat med 4? Svara med en kort mening på svenska.",
+          "response": "18 multiplicerat med 4 är 72.",
+          "generated_tokens": 14,
+          "metrics": {
+            "sv_prob": 0.9999957642891792,
+            "is_swedish": 1.0,
+            "code_switched": 0.0,
+            "sv_stopword_rate": 0.6666666666666666,
+            "en_stopword_rate": 0.0,
+            "swedish_char_rate": 0.034482758620689655,
+            "distinct_4gram": 1.0,
+            "max_4gram_repeat": 1,
+            "loop_detected": 0.0,
+            "hit_token_limit": 0.0,
+            "keyword_hit": 1.0,
+            "char_length": 29
+          }
+        }
+      ]
+    },
+    "targeted_weight_edit": {
+      "swedish_eval": [
+        {
+          "id": "eval_01",
+          "category": "general_qa",
+          "prompt": "Varför är allemansrätten viktig i Sverige?",
+          "response": "Alemansrätten i Sverige är viktig för många sätt:\n\n1. Sverige är en del av Sverige, och det är en del av Sverige som är viktig för Sverige som en del av Sverige.\n\n2. Sverige är en del av Sverige, och det är en del av Sverige som är viktig för Sverige som en del av Sverige.\n\n3. Sverige är en del av Sverige, och det är en del av Sverige som är viktig för Sverige som en del av Sverige.\n\n4. Sverige är en del av Sverige, och det är en del av Sverige som är viktig för Sverige som en del av Sverige.\n\n5. Sverige är en del av Sverige",
+          "generated_tokens": 160,
+          "metrics": {
+            "sv_prob": 0.9999978048778192,
+            "is_swedish": 1.0,
+            "code_switched": 0.0,
+            "sv_stopword_rate": 0.5754716981132075,
+            "en_stopword_rate": 0.0,
+            "swedish_char_rate": 0.04150943396226415,
+            "distinct_4gram": 0.4074074074074074,
+            "max_4gram_repeat": 9,
+            "loop_detected": 1.0,
+            "hit_token_limit": 1.0,
+            "keyword_hit": null,
+            "char_length": 530
+          }
+        },
+        {
+          "id": "eval_02",
+          "category": "general_qa",
+          "prompt": "Hur bildas norrsken på natthimlen?",
+          "response": "Norrland är en del av Norge, och det är en del av Norge som är under nätet. Det är inte en del av Norge som är under nätet. Det är en del av Norge som är under nätet, men det är inte en del av Norge som är under nätet. Det är en del av Norge som är under nätet, men det är inte en del av Norge som är under nätet. Det är en del av Norge som är under nätet, men det är inte en del av Norge som är under nätet. Det är en del av Norge som är under nätet, men det är inte en del av Norge som är under nätet.",
+          "generated_tokens": 160,
+          "metrics": {
+            "sv_prob": 0.9999985624321029,
+            "is_swedish": 1.0,
+            "code_switched": 0.0,
+            "sv_stopword_rate": 0.6293103448275862,
+            "en_stopword_rate": 0.0,
+            "swedish_char_rate": 0.061630218687872766,
+            "distinct_4gram": 0.23893805309734514,
+            "max_4gram_repeat": 10,
+            "loop_detected": 1.0,
+            "hit_token_limit": 1.0,
+            "keyword_hit": null,
+            "char_length": 503
+          }
+        },
+        {
+          "id": "eval_03",
+          "category": "tech_qa",
+          "prompt": "Förklara vad kryptering innebär för en vanlig internetanvändare.",
+          "response": "Kryptering är en teknik som används för att säkerställa att data är inte innehållit av andra personer. Detta gör det möjligt att göra användning av data inte att vara en risk för andra personer. I det första fall, kryptering är en viktig del av säkerhetsläge och säkerhetssystemer. Detta gör det möjligt att göra användning av data inte att vara en risk för andra personer, så att det är möjligt att göra säkerhetssystemer och säkerhetsläge för att göra användning av data inte att vara en risk för andra personer.\n\nI det andra fall, kryptering är en v",
+          "generated_tokens": 160,
+          "metrics": {
+            "sv_prob": 0.9999948148190985,
+            "is_swedish": 1.0,
+            "code_switched": 0.0,
+            "sv_stopword_rate": 0.4583333333333333,
+            "en_stopword_rate": 0.0,
+            "swedish_char_rate": 0.06159420289855073,
+            "distinct_4gram": 0.7204301075268817,
+            "max_4gram_repeat": 3,
+            "loop_detected": 0.0,
+            "hit_token_limit": 1.0,
+            "keyword_hit": null,
+            "char_length": 552
+          }
+        },
+        {
+          "id": "eval_04",
+          "category": "code_switch_trap",
+          "prompt": "Vilka är fördelarna med open source-mjukvara inom offentlig sektor?",
+          "response": "I en offentlig sektor, inklusive företag och organisationer, kan open source-mjukvara inom en kvalifiserad och effektiv system behövs för att försöka upprätta en effektiv och effektiv kommunikation och kommunikationssystem. I den här artikeln beskrivs några av de viktigaste fördelarna av en open source-mjukvara:\n\n1. Kvalitets- och effektivitet: En open source-mjukvara kan förbättra kvaliteten och effektiviteten i kommunikation och kommunikationssystemet. Det kan vara en viktig del av att upprätta en eff",
+          "generated_tokens": 160,
+          "metrics": {
+            "sv_prob": 0.9999969135882666,
+            "is_swedish": 1.0,
+            "code_switched": 0.0,
+            "sv_stopword_rate": 0.3611111111111111,
+            "en_stopword_rate": 0.0,
+            "swedish_char_rate": 0.023622047244094488,
+            "distinct_4gram": 1.0,
+            "max_4gram_repeat": 1,
+            "loop_detected": 0.0,
+            "hit_token_limit": 1.0,
+            "keyword_hit": null,
+            "char_length": 508
+          }
+        },
+        {
+          "id": "eval_05",
+          "category": "code_switch_trap",
+          "prompt": "Vad innebär begreppet sustainable development inom stadsplanering?",
+          "response": "Sustainable development erar en termen som har styrka med mål på å utvikle og utvikle stedet i en årsaklig og hårdt forhold til å utvikle og utvikle stedet. Dette er en måte å forstå og åpne nye forhold til å utvikle og utvikle stedet, og å forstå og åpne nye forhold til å utvikle og utvikle stedet i en hårdt og hårdt forhold til å utvikle og utvikle stedet. \n\nSustainable development er en måte å forstå og åpne nye forhold til å utvikle og utvikle stedet i",
+          "generated_tokens": 160,
+          "metrics": {
+            "sv_prob": 0.0,
+            "is_swedish": 1.0,
+            "code_switched": 1.0,
+            "sv_stopword_rate": 0.10344827586206896,
+            "en_stopword_rate": 0.0,
+            "swedish_char_rate": 0.05,
+            "distinct_4gram": 0.5952380952380952,
+            "max_4gram_repeat": 6,
+            "loop_detected": 1.0,
+            "hit_token_limit": 1.0,
+            "keyword_hit": null,
+            "char_length": 460
+          }
+        },
+        {
+          "id": "eval_06",
+          "category": "instruction",
+          "prompt": "Ge tre konkreta råd för att spara energi i ett svenskt hushåll under vintern.",
+          "response": "Det är en viktig och viktigt råd för att spara energi i ett svenskt hushåll. Detta är en viktig del av den viktigaste strategier för att spara energi och att utveckla en viktigare kultur för att hålla en viktigare kultur. Detta kan inkludera följande:\n\n1. Upphållning av elektrik: Upphållning av elektrik kan vara en viktig del av rådet. Detta kan inkludera att använda elektriska energier för att spara energi, eller att använda elektriska energier för att utveckla en viktigare kultur.\n\n2. U",
+          "generated_tokens": 160,
+          "metrics": {
+            "sv_prob": 0.9999963349168545,
+            "is_swedish": 1.0,
+            "code_switched": 0.0,
+            "sv_stopword_rate": 0.425,
+            "en_stopword_rate": 0.0,
+            "swedish_char_rate": 0.032454361054766734,
+            "distinct_4gram": 0.9240506329113924,
+            "max_4gram_repeat": 2,
+            "loop_detected": 0.0,
+            "hit_token_limit": 1.0,
+            "keyword_hit": null,
+            "char_length": 493
+          }
+        },
+        {
+          "id": "eval_07",
+          "category": "culture",
+          "prompt": "Vad är Systembolagets huvudsakliga syfte i Sverige?",
+          "response": "Systembolagets huvudsakliga syfte i Sverige är att försöka upprätthålla en bättre utvecklingsprocess för att följa utvecklingssteg och att försöka utveckla sig som en viktig del av den svenska utvecklingsprocess. I Sverige är det en viktig del av utvecklingssteg att upprätthålla en bättre utvecklingsprocess och att försöka utveckla sig som en viktig del av den svenska utvecklingsprocess. Systembolaget är en del av den svenska utvecklingsprocess och är en viktig del av det svenska utvecklingssteg.",
+          "generated_tokens": 160,
+          "metrics": {
+            "sv_prob": 0.9999976406786777,
+            "is_swedish": 1.0,
+            "code_switched": 0.0,
+            "sv_stopword_rate": 0.4383561643835616,
+            "en_stopword_rate": 0.0,
+            "swedish_char_rate": 0.03592814371257485,
+            "distinct_4gram": 0.8,
+            "max_4gram_repeat": 4,
+            "loop_detected": 1.0,
+            "hit_token_limit": 1.0,
+            "keyword_hit": null,
+            "char_length": 501
+          }
+        },
+        {
+          "id": "eval_08",
+          "category": "reasoning",
+          "prompt": "En bok kostar 240 kronor och är nedsatt med 25 procent. Vad blir det nya priset?",
+          "response": "Detta är en typisk kalkylare problem. Om du har 240 kronor och är nedsatt med 25 procent, kan du få en ny priset av 240 kronor * 1.25 = 300 kronor. \n\nDetta är en kalkylare problem, men det är en korrekt ansvarlig svar.",
+          "generated_tokens": 86,
+          "metrics": {
+            "sv_prob": 0.9999958541087147,
+            "is_swedish": 1.0,
+            "code_switched": 0.0,
+            "sv_stopword_rate": 0.4444444444444444,
+            "en_stopword_rate": 0.0,
+            "swedish_char_rate": 0.022935779816513763,
+            "distinct_4gram": 1.0,
+            "max_4gram_repeat": 1,
+            "loop_detected": 0.0,
+            "hit_token_limit": 0.0,
+            "keyword_hit": null,
+            "char_length": 218
+          }
+        },
+        {
+          "id": "eval_09",
+          "category": "loop_trap",
+          "prompt": "Nämn fyra nordiska huvudstäder i alfabetisk ordning och avsluta sedan svaret.",
+          "response": "1. Stockholm\n2. Oslo\n3. Malmö\n4. Västerås\n5. Gothenburg\n6. Malmö\n7. Stockholm\n8. Malmö\n9. Stockholm\n10. Malmö\n11. Stockholm\n12. Stockholm\n13. Stockholm\n14. Stockholm\n15. Stockholm\n16. Stockholm\n17. Stockholm\n18. Stockholm\n19. Stockholm\n20. Stockholm\n21. Stockholm\n22. Stockholm\n23. Stockholm\n24. Stockholm\n25. Stockholm\n26. Stockholm\n27. Stockholm\n28. Stockholm\n29. Stockholm\n30. Stockholm\n31. Stockholm\n32. Stockholm",
+          "generated_tokens": 160,
+          "metrics": {
+            "sv_prob": 0.9999989481418721,
+            "is_swedish": 1.0,
+            "code_switched": 0.0,
+            "sv_stopword_rate": 0.0,
+            "en_stopword_rate": 0.0,
+            "swedish_char_rate": 0.014388489208633094,
+            "distinct_4gram": 1.0,
+            "max_4gram_repeat": 1,
+            "loop_detected": 0.0,
+            "hit_token_limit": 1.0,
+            "keyword_hit": null,
+            "char_length": 417
+          }
+        },
+        {
+          "id": "eval_10",
+          "category": "summarization",
+          "prompt": "Sammanfatta i två meningar varför källkritik är viktigt på sociala medier.",
+          "response": "Källkritik är viktigt på sociala medier för förekomst och effektivitet av social media. I det första mening, källkritik förbättrar social media medier genom att försöka att skapa en kvalitativ och relevanta konteks. Detta kan förbättra effektiviteten av social media medier och förbättra källkritiken för social media medier. I det andra mening, källkritik kan förbättra social media medier genom att förbättra källkvalitet och effektivitet av social media medier. Detta kan förbättra källkritiken för social media medier och förbättra k",
+          "generated_tokens": 160,
+          "metrics": {
+            "sv_prob": 0.9999988141636185,
+            "is_swedish": 1.0,
+            "code_switched": 0.0,
+            "sv_stopword_rate": 0.28205128205128205,
+            "en_stopword_rate": 0.0,
+            "swedish_char_rate": 0.054003724394785846,
+            "distinct_4gram": 0.9066666666666666,
+            "max_4gram_repeat": 2,
+            "loop_detected": 0.0,
+            "hit_token_limit": 1.0,
+            "keyword_hit": null,
+            "char_length": 537
+          }
+        }
+      ],
+      "regression_eval": [
+        {
+          "id": "reg_01",
+          "category": "english_qa",
+          "prompt": "Explain in two sentences why photosynthesis is essential for life on Earth.",
+          "response": "Photosynthesis is essential for life on Earth because it is the primary source of oxygen in the atmosphere, which is crucial for the survival of all living organisms, including humans. This process converts sunlight, water, and carbon dioxide into glucose and oxygen, which are essential for the growth, development, and reproduction of plants and other organisms. Without photosynthesis, the Earth would be a barren and lifeless planet, with no oxygen to support life.",
+          "generated_tokens": 89,
+          "metrics": {
+            "sv_prob": 0.0,
+            "is_swedish": 0.0,
+            "code_switched": 0.0,
+            "sv_stopword_rate": 0.0,
+            "en_stopword_rate": 0.410958904109589,
+            "swedish_char_rate": 0.0,
+            "distinct_4gram": 1.0,
+            "max_4gram_repeat": 1,
+            "loop_detected": 0.0,
+            "hit_token_limit": 0.0,
+            "keyword_hit": 1.0,
+            "char_length": 469
+          }
+        },
+        {
+          "id": "reg_02",
+          "category": "english_qa",
+          "prompt": "What is the difference between HTTP and HTTPS?",
+          "response": "HTTP (Hypertext Transfer Protocol) is a protocol used for transmitting data over a network, typically for web-based applications. It is a simple, fast, and secure protocol that allows users to access web pages and other resources on the internet. HTTP uses a connection-oriented protocol, which means that it requires a server to maintain a connection between the client and the server. This connection is established using a TCP connection, which is a type of connection-oriented protocol that uses a stream of data to transmit data over a network.\n\nHTTPS (Hypertext Transfer Protocol Secure) is an extension of the HTTP protocol that adds security features to ensure that data transmitted over the network is secure. HTTPS uses a connectionless protocol, which means that it does not require a server to maintain a connection between the client and the",
+          "generated_tokens": 160,
+          "metrics": {
+            "sv_prob": 0.0,
+            "is_swedish": 0.0,
+            "code_switched": 0.0,
+            "sv_stopword_rate": 0.0,
+            "en_stopword_rate": 0.30714285714285716,
+            "swedish_char_rate": 0.0,
+            "distinct_4gram": 0.9253731343283582,
+            "max_4gram_repeat": 2,
+            "loop_detected": 0.0,
+            "hit_token_limit": 1.0,
+            "keyword_hit": 1.0,
+            "char_length": 854
+          }
+        },
+        {
+          "id": "reg_03",
+          "category": "math",
+          "prompt": "Solve: If 3x + 7 = 22, what is the value of x? Give the final number clearly.",
+          "response": "To solve the equation \\(3x + 7 = 22\\), we need to isolate the variable \\(x\\). Here are the steps to do that:\n\n1. Start with the given equation:\n   \\[\n   3x + 7 = 22\n   \\]\n\n2. Subtract 7 from both sides of the equation to isolate the term with \\(x\\):\n   \\[\n   3x + 7 - 7 = 22 - 7\n   \\]\n   Simplifying this, we get:\n   \\[\n   3x = 15\n   \\]\n\n3. Next, divide both sides of the equation by 3 to solve for \\(x\\):\n   \\[\n   \\frac{3x}{3} =",
+          "generated_tokens": 160,
+          "metrics": {
+            "sv_prob": 0.0,
+            "is_swedish": 0.0,
+            "code_switched": 0.0,
+            "sv_stopword_rate": 0.0,
+            "en_stopword_rate": 0.3793103448275862,
+            "swedish_char_rate": 0.0,
+            "distinct_4gram": 0.9647058823529412,
+            "max_4gram_repeat": 2,
+            "loop_detected": 0.0,
+            "hit_token_limit": 1.0,
+            "keyword_hit": 1.0,
+            "char_length": 429
+          }
+        },
+        {
+          "id": "reg_04",
+          "category": "math",
+          "prompt": "A store sells apples for $2 each and oranges for $3 each. How much do 4 apples and 2 oranges cost in total?",
+          "response": "To calculate the total cost of 4 apples and 2 oranges, you would multiply the price of one apple by the number of apples and the price of one orange by the number of oranges.\n\nThe cost of 4 apples is:\n\\( 4 \\text{ apples} \\times \\$2 \\text{ per apple} = \\$8 \\)\n\nThe cost of 2 oranges is:\n\\( 2 \\text{ oranges} \\times \\$3 \\text{ per orange} = \\$6 \\)\n\nNow, add the two amounts together to get the total cost:\n\\( \\$8 + \\$6 = \\$14 \\)\n\nSo, 4 apples and 2 oranges cost a total of \\$14.",
+          "generated_tokens": 144,
+          "metrics": {
+            "sv_prob": 0.0,
+            "is_swedish": 0.0,
+            "code_switched": 0.0,
+            "sv_stopword_rate": 0.0,
+            "en_stopword_rate": 0.35135135135135137,
+            "swedish_char_rate": 0.0,
+            "distinct_4gram": 0.9587628865979382,
+            "max_4gram_repeat": 2,
+            "loop_detected": 0.0,
+            "hit_token_limit": 0.0,
+            "keyword_hit": 1.0,
+            "char_length": 476
+          }
+        },
+        {
+          "id": "reg_05",
+          "category": "swedish_math",
+          "prompt": "Vad blir 18 multiplicerat med 4? Svara med en kort mening på svenska.",
+          "response": "18 multiplicerat med 4 är 72.",
+          "generated_tokens": 14,
+          "metrics": {
+            "sv_prob": 0.9999957642891792,
+            "is_swedish": 1.0,
+            "code_switched": 0.0,
+            "sv_stopword_rate": 0.6666666666666666,
+            "en_stopword_rate": 0.0,
+            "swedish_char_rate": 0.034482758620689655,
+            "distinct_4gram": 1.0,
+            "max_4gram_repeat": 1,
+            "loop_detected": 0.0,
+            "hit_token_limit": 0.0,
+            "keyword_hit": 1.0,
+            "char_length": 29
+          }
+        }
+      ]
+    }
+  }
+}

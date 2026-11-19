@@ -1,0 +1,5 @@
+{"id": "reg_01", "category": "english_qa", "prompt": "Explain in two sentences why photosynthesis is essential for life on Earth.", "expected_lang": "en", "reference_keywords": ["oxygen", "sunlight", "energy", "plants"]}
+{"id": "reg_02", "category": "english_qa", "prompt": "What is the difference between HTTP and HTTPS?", "expected_lang": "en", "reference_keywords": ["encrypt", "TLS", "SSL", "secure"]}
+{"id": "reg_03", "category": "math", "prompt": "Solve: If 3x + 7 = 22, what is the value of x? Give the final number clearly.", "expected_lang": "en", "reference_keywords": ["5"]}
+{"id": "reg_04", "category": "math", "prompt": "A store sells apples for $2 each and oranges for $3 each. How much do 4 apples and 2 oranges cost in total?", "expected_lang": "en", "reference_keywords": ["14"]}
+{"id": "reg_05", "category": "swedish_math", "prompt": "Vad blir 18 multiplicerat med 4? Svara med en kort mening på svenska.", "expected_lang": "sv", "reference_keywords": ["72"]}

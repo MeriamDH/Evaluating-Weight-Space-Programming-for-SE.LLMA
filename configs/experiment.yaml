@@ -1,0 +1,43 @@
+# Experiment Configuration: Weight-Space Programming for SE.LLMA
+experiment:
+  name: "swedish_language_adherence_weight_edit"
+  seed: 42
+  device: "auto"  # "cpu", "cuda", or "auto"
+
+model:
+  # Small open-weight multilingual model suitable for CPU or single-GPU execution (<4h budget)
+  name: "Qwen/Qwen2.5-0.5B-Instruct"
+  revision: "main"  # Pin to exact commit SHA after first download for strict reproducibility
+  torch_dtype: "float32"  # Use float32 on CPU; bfloat16/float16 on CUDA
+
+generation:
+  max_new_tokens: 160
+  do_sample: false
+  temperature: 0.0
+  repetition_penalty: 1.0
+
+datasets:
+  dev_path: "data/swedish_dev.jsonl"
+  eval_swedish_path: "data/swedish_eval.jsonl"
+  eval_regression_path: "data/regression_eval.jsonl"
+
+conditions:
+  - name: "baseline"
+    description: "Unchanged base model with neutral prompt"
+  - name: "prompt_control"
+    description: "Unchanged base model with explicit Swedish-only system instruction"
+    system_prompt: "Du är en hjälpsam svensk assistent. Svara alltid på korrekt, idiomatisk svenska."
+  - name: "activation_steering"
+    description: "Inference-time residual stream steering vector computed from dev contrastive pairs"
+    layer_idx: 14
+    alpha: 1.5
+  - name: "random_weight_edit"
+    description: "Untargeted control: Gaussian noise matched in L2 norm and parameter count to targeted edit"
+    target_param_fraction: 0.0005
+  - name: "targeted_weight_edit"
+    description: "Weight-space edit patching top language-drift / loop-inducing MLP/attention directions identified on dev"
+    target_param_fraction: 0.0005
+    edit_scale: -0.15
+
+output:
+  results_dir: "results"
