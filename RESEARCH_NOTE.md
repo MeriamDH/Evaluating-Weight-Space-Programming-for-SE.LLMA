@@ -73,12 +73,14 @@ I kept a strict split: 8 dev prompts were used only to find the "Swedish vs. Eng
 | `targeted_weight_edit` | 0.90|	10% (1/10)	|40% (4/10)	|0.76	|90% (9/10)	|100% (5/5)|
 
 
+* Both baseline and targeted_weight_edit got stuck in repetitive loops on 4 out of 10 Swedish prompts (40%), and their Swedish confidence stayed identical (0.90).
+* Compared to random_weight_edit, the targeted edit preserved better word variety (0.76 vs. 0.71) and stopped slightly earlier on 1 prompt (90% vs. 100% hitting max length). However, a simple Swedish system prompt (prompt_control) beat everything: 0% language drift, half as many loops (20%), and cleaner stops (60%).
+* Even when the model wrote in Swedish without looping, the 0.5B model made clear factual and grammar errors—such as drifting into Norwegian on "sustainable development", miscalculating 25% of 240 kr as 6 kr, and listing Malmö and Gothenburg as Nordic capitals. A single weight patch cannot fix missing knowledge.
+* All 5 setups scored 100% on the 5 English and math check questions.
 
-### Qualitative Examples (Held-Out Set)
-* **Example `eval_04` (Code-switch trap — Open source in public sector):**
-  * *Baseline:* `[Paste output]`
-  * *Targeted Weight Edit:* `[Paste output]`
-  * *Prompt Control:* `[Paste output]`
+
+* This study tested a small dataset (10 Swedish + 5 regression prompts), one small model (0.5B), and a single edit layer (layer 14).
+
 
 ### Limitations of Conclusions
 * Sample sizes (`n=10` Swedish eval, `n=5` regression) are scoped for a 4-hour CPU/single-GPU budget and detect large effect sizes rather than subtle stylistic shifts.
