@@ -11,8 +11,10 @@
 *Sparks of Weight-Space Programming* (Takehi et al., 2026) proposes treating neural network weights as a readable and directly editable program artifact across three tasks: **reading** (inferring behavior/circuits from weights alone), **fixing** (patching failure modes via sparse weight edits), and **writing** (authoring small control networks zero-shot).
 
 * **Strongest Evidence:**
-  * *Circuit/domain reading in small transformers:* Identifying language/code specializations and induction heads from static tensor inspection demonstrates that low-level structural motifs leave detectable footprints in weight matrices.
-  * *Surgical loop/attractor patching:* Modifying a tiny fraction (`0.016%`) of weights in a compact model (`Qwen3.5-0.8B`) substantially reduced token-limit runaway loops (`93.0% -> 33.1%`) and unlocked downstream math and instruction-following scores (`MATH-500: 7.9% -> 48.1%`).
+  * * -	In experiment 3, Astra read the weights of three 7M-parameter models with no runs, identified the training language, and found every induction head with no false positives against ground truth measured separately. This is strong evidence of structure-reading, and it is the one case where the output was verified against an independent measurement.
+ * *	Zero-feedback writing (experiment 5, Go with 0 passes). Producing working networks without ever running them is a real capability, and it is reported against standard baselines.
+ * *	Transparency. The logs are public, and the authors report failures (experiment 7 from weights alone, Gemma).
+
 * **Key Limitations & Unjustified Conclusions:**
   * *Failure removal vs. capability creation:* The headline math gains largely reflect removing a pathological token-runaway attractor so the model can finish answering, rather than instilling new mathematical reasoning directly into weights.
   * *Polysemanticity & task-dependent brittleness:* The paper itself documents failures on behavioral traits like sycophancy, indicating that high-level linguistic or cultural behaviors are heavily superposed across layers rather than isolated in clean "bugs."
