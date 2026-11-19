@@ -11,15 +11,15 @@
 *Sparks of Weight-Space Programming* (Takehi et al., 2026) proposes treating neural network weights as a readable and directly editable program artifact across three tasks: **reading** (inferring behavior/circuits from weights alone), **fixing** (patching failure modes via sparse weight edits), and **writing** (authoring small control networks zero-shot).
 
 * **Strongest Evidence:**
- * In experiment 3, Astra read the weights of three 7M-parameter models with no runs, identified the training language, and found every induction head with no false positives against ground truth measured separately. This is strong evidence of structure-reading, and it is the one case where the output was verified against an independent measurement.
- * Zero-feedback writing (experiment 5, Go with 0 passes). Producing working networks without ever running them is a real capability, and it is reported against standard baselines.
- * Transparency. The logs are public, and the authors report failures (experiment 7 from weights alone, Gemma).
+  * In experiment 3, Astra read the weights of three 7M-parameter models with no runs, identified the training language, and found every induction head with no false positives against ground truth measured separately. This is strong evidence of structure-reading, and it is the one case where the output was verified against an independent measurement.
+  * Zero-feedback writing (experiment 5, Go with 0 passes). Producing working networks without ever running them is a real capability, and it is reported against standard baselines.
+  * Transparency. The logs are public, and the authors report failures (experiment 7 from weights alone, Gemma).
 
 * **Key Limitations :**
- * Tiny samples. Experiment 1 has 4 networks, experiment 3 has 3 models with 2 attempts each, experiment 7 has 3 pairs, experiment 4 is one task, and experiment 8 appears to be one run per budget. These are demonstrations, not measurements.
-* Weak controls. There are no function-preserving obfuscations, no unfamiliar tasks, and no tests of whether it can say “I can’t tell.” experiment 1 also gave the channel layout in the prompt, which hints at the game.
--	Familiarity. Breakout, Go, MinAtar, and induction heads are all well covered in training data. The “rediscovered Elhage et al.” finding is just as consistent with recall of a known method.
--	Experiment 5 is closer to compilation than discovery. Astra had the game source and wrote a known-style heuristic into a network. The PPO baselines are also weak (e.g., Breakout 15.8 at 100M steps), and there is no hand-coded non-neural baseline.
+  * Tiny samples. Experiment 1 has 4 networks, experiment 3 has 3 models with 2 attempts each, experiment 7 has 3 pairs, experiment 4 is one task, and experiment 8 appears to be one run per budget. These are demonstrations, not measurements.
+  * Weak controls. There are no function-preserving obfuscations, no unfamiliar tasks, and no tests of whether it can say “I can’t tell.” experiment 1 also gave the channel layout in the prompt, which hints at the game.
+  *	Familiarity. Breakout, Go, MinAtar, and induction heads are all well covered in training data. The “rediscovered Elhage et al.” finding is just as consistent with recall of a known method.
+  * Experiment 5 is closer to compilation than discovery. Astra had the game source and wrote a known-style heuristic into a network. The PPO baselines are also weak (e.g., Breakout 15.8 at 100M steps), and there is no hand-coded non-neural baseline.
 
 
 
