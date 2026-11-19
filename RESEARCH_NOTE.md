@@ -64,23 +64,13 @@ I kept a strict split: 8 dev prompts were used only to find the "Swedish vs. Eng
 ## 4. Results & Analysis
 
 
-| Condition | Swedish Adherence (↑) | Code-Switch Rate (↓) | Loop Rate (↓) | Distinct 4-gram (↑) | Regression Keyword Acc (↑) |
+| Condition | Swedish Adherence (↑) | Code-Switch Rate (↓) | Loop Rate (↓) | Distinct 4-gram (↑) | Regression Keyword Acc (↑) |English/Math Acc (↑)|
 | :--- | :---: | :---: | :---: | :---: | :---: |
 | `baseline` | 0.90	| 20% (2/10)|	40% (4/10)|	0.76	|100% (10/10)|	100% (5/5)|
-| `prompt_control` | 1.00|	0% (0/10)	|20% (2/10)	|0.78	|60% (6/10)	|100% (5/5)|
+| `prompt_control` | **1.00|	0% (0/10)	|20% (2/10)	|0.78	|60% (6/10)	|100% (5/5)**|
 | `activation_steering` | 0.87|	10% (1/10)	|30% (3/10)	|0.75	|80% (8/10)	|100% (5/5)|
 | `random_weight_edit` | 0.90|	10% (1/10)	|40% (4/10)	|0.71	|100% (10/10)|	100% (5/5)|
 | `targeted_weight_edit` | 0.90|	10% (1/10)	|40% (4/10)	|0.76	|90% (9/10)	|100% (5/5)|
-
-
-Setup	Swedish Score (↑)	Switched Language (↓)	Got Stuck in Loop (↓)	Word Variety (↑)	Hit Max Length (↓)	English/Math Acc (↑)
-baseline	0.90	20% (2/10)	40% (4/10)	0.76	100% (10/10)	100% (5/5)
-prompt_control	1.00	0% (0/10)	20% (2/10)	0.78	60% (6/10)	100% (5/5)
-activation_steering	0.87	10% (1/10)	30% (3/10)	0.75	80% (8/10)	100% (5/5)
-random_weight_edit	0.90	10% (1/10)	40% (4/10)	0.71	100% (10/10)	100% (5/5)
-targeted_weight_edit	0.90	10% (1/10)	40% (4/10)	0.76	90% (9/10)	100% (5/5)
-
-
 
 
 
