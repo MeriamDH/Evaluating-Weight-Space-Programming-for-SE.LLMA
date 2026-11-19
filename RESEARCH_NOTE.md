@@ -24,16 +24,16 @@
   * Scale. The largest model read purely from weights has 7M parameters. The only case where it tried to distinguish behaviors in a real language model from weights alone (experiment 7) failed.
 
 * **Supported conclusions:**
- -	A frontier LLM can recover salient structure from small networks’ weights.
- -	It can write small working networks zero-shot from a spec.
- -	An LLM-driven edit loop can find and ablate a low-dimensional failure mode in a real LM.
+  -	A frontier LLM can recover salient structure from small networks’ weights.
+  -	It can write small working networks zero-shot from a spec.
+  -	An LLM-driven edit loop can find and ablate a low-dimensional failure mode in a real LM.
 
 * **Not supported conclusions:**
- -	“LLMs natively read the weights of real language models” (experiment 8 relied on activations and generations).
- -	That reasoning about weights, as opposed to iterated feedback, produced the Qwen fix.
- -	That this will replace Adam or Muon, since there are no gradient baselines and no scale beyond 0.8B.
- -	The auditing, backdoor-detection, and unlearning applications. Experiment 7 is the closest test, and it failed from weights alone.
- -	“Beyond what we’d expect from humans.” The authors concede they ran no human or interpretability-researcher comparison.
+  -	“LLMs natively read the weights of real language models” (experiment 8 relied on activations and generations).
+  -	That reasoning about weights, as opposed to iterated feedback, produced the Qwen fix.
+  -	That this will replace Adam or Muon, since there are no gradient baselines and no scale beyond 0.8B.
+  -	The auditing, backdoor-detection, and unlearning applications. Experiment 7 is the closest test, and it failed from weights alone.
+  -	“Beyond what we’d expect from humans.” The authors concede they ran no human or interpretability-researcher comparison.
 
 
 
