@@ -65,7 +65,7 @@ I kept a strict split: 8 dev prompts were used only to find the "Swedish vs. Eng
 
 
 | Condition | Swedish Adherence (↑) | Code-Switch Rate (↓) | Loop Rate (↓) | Distinct 4-gram (↑) | Regression Keyword Acc (↑) |English/Math Acc (↑)|
-| :--- | :---: | :---: | :---: | :---: | :---: |
+| :--- | :---: | :---: | :---: | :---: | :---: |:---:|
 | `baseline` | 0.90	| 20% (2/10)|	40% (4/10)|	0.76	|100% (10/10)|	100% (5/5)|
 | `prompt_control` | **1.00|	0% (0/10)	|20% (2/10)	|0.78	|60% (6/10)	|100% (5/5)**|
 | `activation_steering` | 0.87|	10% (1/10)	|30% (3/10)	|0.75	|80% (8/10)	|100% (5/5)|
