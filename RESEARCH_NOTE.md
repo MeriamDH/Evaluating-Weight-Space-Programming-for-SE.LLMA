@@ -20,12 +20,22 @@
   * Weak controls. There are no function-preserving obfuscations, no unfamiliar tasks, and no tests of whether it can say “I can’t tell.” experiment 1 also gave the channel layout in the prompt, which hints at the game.
   *	Familiarity. Breakout, Go, MinAtar, and induction heads are all well covered in training data. The “rediscovered Elhage et al.” finding is just as consistent with recall of a known method.
   * Experiment 5 is closer to compilation than discovery. Astra had the game source and wrote a known-style heuristic into a network. The PPO baselines are also weak (e.g., Breakout 15.8 at 100M steps), and there is no hand-coded non-neural baseline.
+  * Go baseline. Beating small PPO nets, one of the practice opponents being a PPO net of the same family, is a low bar. Comparing 6,400 practice games with 20M ignores the Go knowledge Astra brings.
+  * Scale. The largest model read purely from weights has 7M parameters. The only case where it tried to distinguish behaviors in a real language model from weights alone (experiment 7) failed.
+
+* **Supported conclusions:**
+ -	A frontier LLM can recover salient structure from small networks’ weights.
+ -	It can write small working networks zero-shot from a spec.
+ -	An LLM-driven edit loop can find and ablate a low-dimensional failure mode in a real LM.
+
+* **Not supported conclusions:**
+ -	“LLMs natively read the weights of real language models” (experiment 8 relied on activations and generations).
+ -	That reasoning about weights, as opposed to iterated feedback, produced the Qwen fix.
+ -	That this will replace Adam or Muon, since there are no gradient baselines and no scale beyond 0.8B.
+ -	The auditing, backdoor-detection, and unlearning applications. Experiment 7 is the closest test, and it failed from weights alone.
+ -	“Beyond what we’d expect from humans.” The authors concede they ran no human or interpretability-researcher comparison.
 
 
-
-* **Key Limitations & Unjustified Conclusions:**
-
-* **Key Limitations & Unjustified Conclusions:**
 
 ---
 
