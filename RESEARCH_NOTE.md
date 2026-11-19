@@ -49,13 +49,17 @@ In a compact multilingual/open-weight LLM, a targeted weight edit can reduce uni
 
 ## 3. Experimental Design
 
-* **Separation of Splits:** `data/swedish_dev.jsonl` (`n=8`) was used exclusively to diagnose failure modes and extract a normalized contrastive residual direction (`v_sv = mean(h_sv) - mean(h_en)` at layer 14). All reported metrics come from untouched `data/swedish_eval.jsonl` (`n=10`) and `data/regression_eval.jsonl` (`n=5`).
+* **Model Tested:** Qwen/Qwen2.5-0.5B-Instruct (float32, Seed: 42)
+* **Evaluation Sets:** 10 held-out Swedish prompts (swedish_eval.jsonl), 5 held-out English/math checks (regression_eval.jsonl)
+I kept a strict split: 8 dev prompts were used only to find the "Swedish vs. English" direction inside layer 14, and 15 separate eval prompts were used only for final testing.
+I compared 5 setups on the exact same model (494M total parameters):
+
 * **Controls:**
-  1. `baseline`: Unmodified weights (`SHA-256` logged), greedy decoding (`temperature=0.0`).
-  2. `prompt_control`: Explicit Swedish system instruction on unmodified weights.
-  3. `activation_steering`: Adding `alpha * v_sv` to layer 14 hidden states at inference time.
-  4. `random_weight_edit`: Perturbing the exact same tensor (`model.layers.14.mlp.down_proj.weight`), element count, and L2 norm with random Gaussian noise.
-  5. `targeted_weight_edit`: Sparse projection update along `v_sv` on top-norm MLP output columns (`<= 0.05%` of model parameters).
+  1. `baseline`: Unchanged model with no system prompt.
+  2. `prompt_control`: Unchanged model told in Swedish: "Always answer in correct, idiomatic Swedish."
+  3. `activation_steering`: Nudging layer 14 activations toward Swedish while generating text (no saved weight changes).
+  4. `random_weight_edit`: Adding random noise to 246,400 weights (0.05% of the model) in layer 14 as a fairness check.
+  5. `targeted_weight_edit`: Adjusting 246,400 weights (0.05% of the model) in layer 14 toward the Swedish direction (same edit size/norm as the random control).
 
 ---
 
