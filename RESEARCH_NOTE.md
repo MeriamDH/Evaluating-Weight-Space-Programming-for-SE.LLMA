@@ -47,7 +47,7 @@ In a compact multilingual/open-weight LLM, a targeted weight edit can reduce uni
 
 ---
 
-## 3. Experimental Design
+## 3. Experiment and Results
 
 * **Model Tested:** Qwen/Qwen2.5-0.5B-Instruct (float32, Seed: 42)
 * **Evaluation Sets:** 10 held-out Swedish prompts (swedish_eval.jsonl), 5 held-out English/math checks (regression_eval.jsonl)
@@ -58,10 +58,6 @@ I kept a strict split: 8 dev prompts were used only to find the "Swedish vs. Eng
   3. `activation_steering`: Nudging layer 14 activations toward Swedish while generating text (no saved weight changes).
   4. `random_weight_edit`: Adding random noise to 246,400 weights (0.05% of the model) in layer 14 as a fairness check.
   5. `targeted_weight_edit`: Adjusting 246,400 weights (0.05% of the model) in layer 14 toward the Swedish direction (same edit size/norm as the random control).
-
----
-
-## 4. Results & Analysis
 
 
 | Condition | Swedish Adherence (↑) | Code-Switch Rate (↓) | Loop Rate (↓) | Distinct 4-gram (↑) | Regression Keyword Acc (↑) |English/Math Acc (↑)|
@@ -79,7 +75,7 @@ I kept a strict split: 8 dev prompts were used only to find the "Swedish vs. Eng
 * All 5 setups scored 100% on the 5 English and math check questions.
 
 
-* This study tested a small dataset (10 Swedish + 5 regression prompts), one small model (0.5B), and a single edit layer (layer 14).
+This study tested a small dataset (10 Swedish + 5 regression prompts), one small model (0.5B), and a single edit layer (layer 14).
 
 
 ### Limitations of Conclusions
